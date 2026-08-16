@@ -646,5 +646,83 @@ export const SCENARIO_DATA = [
         ]
       }
     ]
+  },
+  {
+    id: "sc-delivery-delay-wedding",
+    title: "Guaranteed Next-Day Delivery Delay - Urgent Wedding Attire",
+    customerName: "Jessica Hayes",
+    customerType: "Prime Member (8 Years)",
+    channel: "Inbound Phone Call",
+    initialMood: "furious",
+    orderInfo: {
+      orderId: "114-6629103-5591820",
+      item: "Emerald Silk Maxi Dress & Evening Heels ($189.00)",
+      status: "Delayed in Transit (Carrier: AMZL)",
+      originalPromise: "Guaranteed Yesterday by 8:00 PM",
+      eventContext: "Sister's Wedding Rehearsal Tonight at 6:00 PM"
+    },
+    background: "Customer ordered dress and shoes with Prime Guaranteed Next-Day delivery for her sister's wedding rehearsal dinner tonight. Tracking updated showing package delayed in sorting hub. Customer is in a panic.",
+    turns: [
+      {
+        turnIndex: 1,
+        customerMessage: "Hi Mark! I am in a total panic! I ordered a dress and shoes for my sister's wedding rehearsal dinner TONIGHT with guaranteed next-day delivery. Your app just updated saying it's delayed until tomorrow night! Tomorrow is too late! The rehearsal dinner is in 4 hours! What am I supposed to do?!",
+        options: [
+          {
+            id: "opt-delay-1a",
+            text: "Hello Jessica! My name is Mark. I completely understand how stressful this is, especially with your sister's wedding rehearsal tonight! Let me immediately pull up your tracking details and contact our local AMZL station to see how we can get this to you today.",
+            quality: "best",
+            impact: { mood: "annoyed", empathy: 30, compliance: 25, fcr: 20, timePenalty: 0 },
+            feedback: "Outstanding empathy by Mark! Validates the specific wedding event urgency and takes immediate ownership without making excuses."
+          },
+          {
+            id: "opt-delay-1b",
+            text: "Delays happen due to weather and traffic. It says tomorrow night so you just have to wait.",
+            quality: "bad",
+            impact: { mood: "furious", empathy: -50, compliance: -30, fcr: -40, timePenalty: 30 },
+            feedback: "Catastrophic empathy failure! Dismissing high-stakes life events destroys customer trust."
+          }
+        ]
+      },
+      {
+        turnIndex: 2,
+        customerMessage: "Can I just drive to the fulfillment center and pick it up from the warehouse myself before 5 PM?",
+        options: [
+          {
+            id: "opt-delay-2a",
+            text: "Fulfillment centers cannot allow customer walk-ins due to safety regulations, Jessica. However, I just submitted an emergency Priority Dispatch Ticket to the local station dispatcher to place your parcel on the early afternoon delivery run arriving before 4:30 PM. I also applied a $15.00 courtesy credit to your account for the missed delivery promise.",
+            quality: "best",
+            impact: { mood: "pleasant", empathy: 25, compliance: 30, fcr: 35, timePenalty: 0 },
+            feedback: "Masterclass resolution! Clarifies safety policies gently, executes station priority dispatch, and applies authorized $15 courtesy concession."
+          },
+          {
+            id: "opt-delay-2b",
+            text: "Sure, go to the warehouse at 100 Industrial Parkway and ask someone at the gate.",
+            quality: "bad",
+            impact: { mood: "pleasant", empathy: 5, compliance: -100, fcr: -80, timePenalty: 20 },
+            feedback: "SEVERE POLICY VIOLATION! Directing customers to unauthorized fulfillment center security gates is strictly prohibited."
+          }
+        ]
+      },
+      {
+        turnIndex: 3,
+        customerMessage: "If it arrives by 4:30 PM, I can still make it to the dinner! What if it doesn't arrive in time, Mark?",
+        options: [
+          {
+            id: "opt-delay-3a",
+            text: "I have enabled real-time SMS driver alerts to your phone. If for any reason it arrives after your event, you can click 'Return Item' in the app for a 100% full refund with free home pickup—you won't pay a single cent. Have I answered all of your questions today, Jessica?",
+            quality: "best",
+            impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 35, timePenalty: 0 },
+            feedback: "Flawless wrap-up! Provided real-time tracking, complete financial safety net, and warm CSAT-friendly closing."
+          },
+          {
+            id: "opt-delay-3b",
+            text: "If it doesn't come, call us back tomorrow.",
+            quality: "bad",
+            impact: { mood: "annoyed", empathy: -20, compliance: -10, fcr: 0, timePenalty: 10 },
+            feedback: "Poor wrap-up without customer reassurance or FCR."
+          }
+        ]
+      }
+    ]
   }
 ];

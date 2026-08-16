@@ -982,7 +982,89 @@ export const MOCK_CALLS_DATA = [
         "Successfully redirected customer to the official Amazon Gift Return portal (amazon.com/returns/gift)."
       ]
     }
+  },
+  {
+    id: "call-delivery-delay-wedding",
+    title: "Guaranteed One-Day Delivery Delay — Urgent Wedding Attire & Logistics Escalation",
+    category: "Delivery & Delay / Concessions",
+    callType: "Inbound Phone Call",
+    caller: "Jessica Hayes",
+    customerTenure: "Prime Member (8 Years)",
+    orderId: "114-6629103-5591820",
+    item: "Emerald Silk Maxi Dress & Evening Heels ($189.00)",
+    trackingStatus: "Delayed in Transit at Regional Sorting Facility (Carrier: AMZL)",
+    callDuration: "3 min 25 sec",
+    summary: "Customer placed a Guaranteed One-Day Prime order for her sister's wedding rehearsal dinner tonight. Package is delayed at a regional sorting hub. Mark confirms the carrier exception, applies an authorized $15 courtesy credit for the missed guarantee, files an emergency priority delivery flag with the AMZL station dispatcher, and provides tracking alerts.",
+    transcript: [
+      {
+        speaker: "Mark (Agent)",
+        text: "Thank you for calling Amazon Customer Support. My name is Mark. May I please have your full name and the email address linked to your Amazon account?",
+        notes: "Standard greeting and mandatory 2-point authentication request."
+      },
+      {
+        speaker: "Customer",
+        text: "Hi Mark, Jessica Hayes here, email is jess.hayes@weddingmail.com. I am in a complete panic right now. I paid for guaranteed next-day delivery on an emerald silk dress and shoes for my sister's wedding rehearsal dinner TONIGHT. The app just updated saying 'Delivery delayed due to processing backlog - Expected by tomorrow night'. Tomorrow night is too late! The wedding is tomorrow afternoon and the rehearsal dinner is in 4 hours!",
+        notes: "Customer is experiencing severe emotional distress due to time-sensitive life event."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Jessica, I completely understand the stress and urgency of this situation, and I am so deeply sorry for this unexpected delay—especially with your sister's wedding rehearsal tonight! Let me immediately pull up your order 114-6629103 and check the internal logistics feed with our local delivery station right now.",
+        notes: "Immediate empathetic validation of the wedding event timeline; takes ownership without deflecting blame to drivers."
+      },
+      {
+        speaker: "Customer",
+        text: "Please check, Mark. Is there any way I can just drive to the warehouse and pick it up myself before 5 PM?",
+        notes: "Customer asks about warehouse pickup."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "I checked the logistics status, Jessica. The parcel arrived at the local AMZL fulfillment hub at 6:30 AM, but was not sorted onto the morning dispatch vans due to a container sort backlog. For safety and security regulations, customers cannot visit fulfillment centers directly. However, I have just filed an emergency Station Priority Dispatch Ticket to flag your package for the early afternoon delivery run arriving before 4:30 PM.",
+        notes: "Transparent explanation of logistics status while executing high-priority AMZL station escalation."
+      },
+      {
+        speaker: "Customer",
+        text: "If it arrives before 4:30 PM, that would give me enough time to get ready for the rehearsal dinner. But what if it doesn't make it in time?",
+        notes: "Customer inquires about contingency."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Because we missed our Prime Guaranteed Delivery promise, I have already applied a $15.00 Courtesy Promotional Credit to your Amazon account balance as an apology for the stress. If for any reason the dress arrives after your event, you can simply click 'Return Item' on the app for a 100% full refund with free scheduled home pickup—you won't be charged a penny. I will also enable SMS real-time driver tracking to your phone ending in 92.",
+        notes: "Applied authorized courtesy credit ($15 tier), explained 100% return/refund safety net, and enabled SMS driver tracking."
+      },
+      {
+        speaker: "Customer",
+        text: "Mark, thank you for being so understanding and for submitting that emergency ticket with the station. That gives me real hope.",
+        notes: "Customer de-escalated and appreciative."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "It is my absolute priority to help you make your sister's wedding day special, Jessica! You will receive live text notifications as soon as the driver enters your neighborhood. Have I answered all of your questions today?",
+        notes: "Warm FCR validation."
+      },
+      {
+        speaker: "Customer",
+        text: "Yes, you did everything you could, Mark. Thank you so much!",
+        notes: "Call concluded with positive CSAT sentiment."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Thank you for being a loyal Prime member, Jessica. Congratulations to your sister and have a wonderful celebration tonight!",
+        notes: "Personalized, warm closing."
+      }
+    ],
+    qaScorecard: {
+      empathyScore: "100%",
+      complianceScore: "100%",
+      fcrScore: "100%",
+      keyTakeaways: [
+        "Acknowledged time-sensitive wedding urgency with deep empathy.",
+        "Executed internal AMZL Station Priority Dispatch escalation ticket.",
+        "Applied authorized $15 courtesy credit for missed Guaranteed Delivery Date (GDD).",
+        "Reassured customer with zero-friction refund and return safety net."
+      ]
+    }
   }
 ];
+
 
 
