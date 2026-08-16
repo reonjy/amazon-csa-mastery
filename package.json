@@ -1,6 +1,7 @@
 {
   "name": "amazon-csa-mastery",
   "version": "1.0.0",
+  "type": "module",
   "description": "Amazon Customer Service Associate (CSA) Training, QA Compliance & Nesting Mastery Simulator",
   "main": "index.html",
   "scripts": {
