@@ -510,5 +510,83 @@ export const SCENARIO_DATA = [
         ]
       }
     ]
+  },
+  {
+    id: "sc-unverified-spouse",
+    title: "Failed Verification - Third-Party Caller & Address Change",
+    customerName: "Tom Reynolds (for Jennifer Reynolds)",
+    customerType: "Unverified Third Party",
+    channel: "Inbound Phone Call",
+    initialMood: "annoyed",
+    orderInfo: {
+      orderId: "114-8839102-3391820",
+      item: "Dyson V15 Cordless Vacuum ($749.99)",
+      status: "In Transit - Delivery Tomorrow",
+      registeredAddress: "420 Oakwood Lane, Columbus, OH",
+      requestedAddress: "1200 N Michigan Ave, Chicago, IL"
+    },
+    background: "Husband calls regarding his wife's Amazon account. He cannot verify the payment card or registered billing address, and demands Mark reroute a $750 vacuum to Chicago. He becomes angry when Mark explains security policies.",
+    turns: [
+      {
+        turnIndex: 1,
+        customerMessage: "Hi Mark, my name is Tom Reynolds. My wife Jennifer placed an order for a Dyson vacuum (#114-8839102) this morning. She's busy in meetings and told me to call you and change the delivery address to our new office in Chicago right now.",
+        options: [
+          {
+            id: "opt-unver-1a",
+            text: "Hello Tom, thank you for reaching out. I can certainly look into this for you. To protect our customers' account security and privacy, may I verify the full billing address and the last 4 digits of the payment card registered under Jennifer's account?",
+            quality: "best",
+            impact: { mood: "neutral", empathy: 20, compliance: 30, fcr: 20, timePenalty: 0 },
+            feedback: "Flawless compliance! Mark initiates mandatory 2-point authentication, even for a spouse."
+          },
+          {
+            id: "opt-unver-1b",
+            text: "Sure! What is the Chicago address? I will update it right now since you're her husband.",
+            quality: "bad",
+            impact: { mood: "pleasant", empathy: 10, compliance: -100, fcr: -100, timePenalty: 0 },
+            feedback: "CRITICAL QA FAIL! Never modify shipment addresses on $750 orders for an unverified third-party caller."
+          }
+        ]
+      },
+      {
+        turnIndex: 2,
+        customerMessage: "Look, I don't know what card she used, and we just moved so I'm not sure which billing address is listed. Can't you just look at the screen and tell me what address is on file, and change it?",
+        options: [
+          {
+            id: "opt-unver-2a",
+            text: "I completely understand the convenience, Tom. However, for customer data security, I am strictly not permitted to read out or confirm account details unless fully verified. Because billing details could not be confirmed, I cannot modify this shipment on this line. For Jennifer's protection, she can update the address in her Amazon app or call us directly.",
+            quality: "best",
+            impact: { mood: "annoyed", empathy: 25, compliance: 30, fcr: 30, timePenalty: 0 },
+            feedback: "Masterclass in Zero-Tolerance Security! Mark refuses to leak private data, de-escalates with calm confidence, and provides legitimate self-service alternatives."
+          },
+          {
+            id: "opt-unver-2b",
+            text: "Is the address 420 Oakwood Lane in Columbus, OH? Does that sound right?",
+            quality: "bad",
+            impact: { mood: "pleasant", empathy: 5, compliance: -100, fcr: -100, timePenalty: 0 },
+            feedback: "CRITICAL SECURITY BREACH! Disclosing unverified customer home addresses is an immediate termination offense."
+          }
+        ]
+      },
+      {
+        turnIndex: 3,
+        customerMessage: "I'm her husband! We have the same last name! Are you seriously refusing to help me?!",
+        options: [
+          {
+            id: "opt-unver-3a",
+            text: "I truly understand your frustration, Tom. These privacy safeguards exist to ensure no unauthorized person can alter orders on your family's account. Jennifer can easily update this in 10 seconds under 'Your Orders' > 'Change Shipping Address' in her Amazon app, or add you as an authorized Household member for future calls. Have I explained our security procedure clearly?",
+            quality: "best",
+            impact: { mood: "neutral", empathy: 25, compliance: 30, fcr: 35, timePenalty: 0 },
+            feedback: "Superb de-escalation! Validates customer frustration, reinforces value of account security, guides exact app navigation, and maintains 100% compliance."
+          },
+          {
+            id: "opt-unver-3b",
+            text: "I am hanging up now. Bye.",
+            quality: "bad",
+            impact: { mood: "furious", empathy: -30, compliance: -20, fcr: -20, timePenalty: 15 },
+            feedback: "Unprofessional disconnect without proper wrap-up or self-service guidance."
+          }
+        ]
+      }
+    ]
   }
 ];

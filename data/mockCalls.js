@@ -732,5 +732,166 @@ export const MOCK_CALLS_DATA = [
         "Applied authorized associate goodwill credit tier ($20) within compliance limits."
       ]
     }
+  },
+  {
+    id: "call-unverified-third-party",
+    title: "Failed Account Verification — Third-Party Caller (Spouse / Non-Authorized)",
+    category: "Security / Zero-Tolerance",
+    callType: "Inbound Phone Call",
+    caller: "Tom Reynolds (Calling for Jennifer Reynolds)",
+    customerTenure: "Unverified Third Party",
+    orderId: "114-8839102-3391820",
+    item: "Dyson V15 Cordless Vacuum ($749.99)",
+    trackingStatus: "In Transit",
+    callDuration: "3 min 20 sec",
+    summary: "Husband calls regarding his wife's Amazon account. He cannot verify the account email or billing address on file, and demands Mark change the delivery address. Mark models the strict Zero-Tolerance security refusal, never reveals private data, and directs to authorized delegate setup.",
+    transcript: [
+      {
+        speaker: "Mark (Agent)",
+        text: "Thank you for calling Amazon Customer Support. My name is Mark. May I please have your full name and the email address linked to the Amazon account?",
+        notes: "Standard opening and mandatory 2-point authentication request."
+      },
+      {
+        speaker: "Customer",
+        text: "Hi Mark, my name is Tom Reynolds. I'm calling about an order my wife Jennifer placed this morning. It's a Dyson vacuum order #114-8839102. She's busy at work and told me to call and change the delivery address to our new office in Chicago.",
+        notes: "Caller explicitly identifies himself as a third party (spouse) not listed on the account."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Hello Tom, thank you for reaching out. I can certainly look into this for you. To protect our customers' account security and privacy, may I verify the full billing address and the last 4 digits of the payment card registered under Jennifer's account?",
+        notes: "Strict adherence to authentication: Even for spouses, full verification is legally required."
+      },
+      {
+        speaker: "Customer",
+        text: "Uh, I don't know which card she used! Probably her Chase card? And our billing address... we just moved from Ohio to Illinois so it might be our old address on Elm Street or the new one. Can't you just check and tell me what address is on the screen?",
+        notes: "Verification FAILS. Customer asks agent to disclose / read out sensitive account information."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "I completely understand how convenient that would be, Tom. However, for the security and data protection of our customers, I am not permitted to read out or confirm account information unless it has been fully verified. Because the billing details and payment card could not be confirmed, I am unable to make changes to this shipment or disclose order specifics on this line.",
+        notes: "Flawless Zero-Tolerance compliance! Polite, firm refusal; zero leakage of private account data."
+      },
+      {
+        speaker: "Customer",
+        text: "Come on, Mark! I'm her husband! We have the same last name! I gave you the order number! Are you saying you won't help me?!",
+        notes: "Customer attempts emotional pressure and escalation."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "I truly apologize for the frustration this causes, Tom. We take customer security extremely seriously, and these privacy protections exist to ensure no unauthorized person can alter orders or access account details. For Jennifer's protection, she can either log into her Amazon app directly to update the delivery address, or call us directly from her verified phone number. She can also add you as an authorized Household member in her Amazon settings for future contacts.",
+        notes: "De-escalates with calm confidence; explains why strict rules protect the customer's own family; provides clear, legitimate self-service alternatives."
+      },
+      {
+        speaker: "Customer",
+        text: "Fine. I'll just text Jennifer and have her open the app on her phone during her lunch break.",
+        notes: "Customer accepts the resolution path."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Thank you for your understanding, Tom. She can easily manage that under 'Your Orders' > 'Change Shipping Address' right in the app. Have I answered all of your questions regarding our security process today?",
+        notes: "Professional wrap-up with precise app navigation guidance."
+      },
+      {
+        speaker: "Customer",
+        text: "Yes, I get why you have the security rules. Thanks Mark.",
+        notes: "Customer respects agent's integrity."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Thank you for calling Amazon, Tom. Have a wonderful day!",
+        notes: "Clean, polite sign-off."
+      }
+    ],
+    qaScorecard: {
+      empathyScore: "100%",
+      complianceScore: "100%",
+      fcrScore: "100%",
+      keyTakeaways: [
+        "CRITICAL: Never bypassed verification for a third-party spouse.",
+        "ZERO-TOLERANCE: Refused customer request to read out unverified address details.",
+        "Educated customer on Amazon Household authorized sharing and app self-service."
+      ]
+    }
+  },
+  {
+    id: "call-failed-otp-recovery",
+    title: "Failed Two-Factor OTP & Social Engineering Bypass Refusal",
+    category: "Security / Zero-Tolerance",
+    callType: "Inbound Phone Call",
+    caller: "Steven Wright (?)",
+    customerTenure: "High Risk Caller",
+    orderId: "N/A (Account Access Attempt)",
+    item: "Account Unlock & 2FA Bypass",
+    trackingStatus: "Account Suspended / 2FA Locked",
+    callDuration: "3 min 05 sec",
+    summary: "Caller claims he lost his phone and demands Mark manually disable Two-Step Verification over the phone to access an account. Mark holds firm on Zero-Tolerance compliance and directs caller to the official Two-Step Verification Account Recovery portal.",
+    transcript: [
+      {
+        speaker: "Mark (Agent)",
+        text: "Thank you for calling Amazon Customer Security Support. My name is Mark. May I have your full name and account email please?",
+        notes: "Opening & security verification."
+      },
+      {
+        speaker: "Customer",
+        text: "Hi Mark, my name is Steven Wright, email is s.wright88@mail.com. Look, I lost my phone while traveling abroad, and I cannot receive the Two-Factor SMS code to log in. I need you to manually turn off 2FA on my account right now so I can log in from my laptop.",
+        notes: "Caller asks associate to manually override Two-Step Verification."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Hello Steven, I understand how difficult it is to be locked out of your account while traveling! However, for your account security, phone associates do not have the technical ability or authorization to manually disable Two-Step Verification over the phone.",
+        notes: "Immediate, clear boundary: Phone agents CANNOT disable 2FA manually."
+      },
+      {
+        speaker: "Customer",
+        text: "What do you mean you can't?! I'm telling you I lost my phone! Just click whatever button you have on your screen to bypass it! I need to access my account right this second!",
+        notes: "Social engineering pressure."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "I completely understand the urgency, Steven. Because Two-Step Verification is our highest layer of account defense, bypassing it requires verified document review through our dedicated Account Recovery Team to protect against unauthorized account takeovers. I can guide you through our secure automated recovery process right now.",
+        notes: "Explains purpose of security protocol and offers authorized Account Recovery pathway."
+      },
+      {
+        speaker: "Customer",
+        text: "How does that recovery process work?",
+        notes: "Customer inquires about process."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "You can go to Amazon.com, attempt to sign in, and on the Two-Step Verification prompt, click 'Didn't receive the OTP?' followed by 'Two-Step Verification Account Recovery'. You will be prompted to securely upload a government-issued ID (such as a passport or driver's license). Our specialized verification team reviews and unlocks verified accounts within 24 to 48 hours.",
+        notes: "Detailed, accurate guidance on official Amazon 2SV Account Recovery SOP."
+      },
+      {
+        speaker: "Customer",
+        text: "Okay, I have my passport with me on my laptop. I will submit it through that recovery link.",
+        notes: "Customer agrees to official protocol."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "That is the fastest and most secure way to regain access, Steven. You will receive email status updates as soon as the verification is finalized. Have I answered all of your questions regarding the account recovery procedure today?",
+        notes: "FCR verification."
+      },
+      {
+        speaker: "Customer",
+        text: "Yes, thank you for guiding me to the right link, Mark.",
+        notes: "Call resolved with zero security compromises."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "You are welcome, Steven. Thank you for calling Amazon and safe travels!",
+        notes: "Professional close."
+      }
+    ],
+    qaScorecard: {
+      empathyScore: "100%",
+      complianceScore: "100%",
+      fcrScore: "100%",
+      keyTakeaways: [
+        "ZERO-TOLERANCE: Refused unauthorized 2FA bypass request.",
+        "Accurately directed customer to the Two-Step Verification Account Recovery portal.",
+        "Prevented social engineering / unauthorized account takeover."
+      ]
+    }
   }
 ];
+
