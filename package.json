@@ -6,8 +6,7 @@
   "main": "index.html",
   "scripts": {
     "dev": "npx -y serve . -p 3000",
-    "start": "npx -y serve . -p 3000",
-    "build": "echo 'Ready for production deployment'"
+    "start": "npx -y serve . -p 3000"
   },
   "keywords": [
     "amazon-csa",
