@@ -3,14 +3,18 @@ import { SOP_DATA } from './data/sops.js';
 import { SCENARIO_DATA } from './data/scenarios.js';
 import { QUIZ_QUESTIONS } from './data/quiz.js';
 import { MACRO_CATEGORIES, ACRONYMS_DATA } from './data/macros.js';
+import { MOCK_CALLS_DATA } from './data/mockCalls.js';
 
 /* ==========================================================================
-   Sound Effects Synthesizer (Web Audio API)
+   Sound Effects & Audio Synthesizer
    ========================================================================== */
 class SoundEngine {
   constructor() {
     this.ctx = null;
     this.enabled = true;
+    this.voiceEnabled = localStorage.getItem('csa_voice') !== 'false';
+    this.currentUtterance = null;
+    this.isCallPlaying = false;
   }
 
   init() {
@@ -51,25 +55,54 @@ class SoundEngine {
   }
 
   playMessagePing() {
-    this.playTone(523.25, 'sine', 0.1, 0.12); // C5
-    setTimeout(() => this.playTone(659.25, 'sine', 0.15, 0.12), 80); // E5
+    this.playTone(523.25, 'sine', 0.1, 0.12);
+    setTimeout(() => this.playTone(659.25, 'sine', 0.15, 0.12), 80);
   }
 
   playSuccess() {
-    this.playTone(523.25, 'sine', 0.08, 0.15); // C5
-    setTimeout(() => this.playTone(659.25, 'sine', 0.08, 0.15), 90); // E5
-    setTimeout(() => this.playTone(783.99, 'sine', 0.2, 0.18), 180); // G5
+    this.playTone(523.25, 'sine', 0.08, 0.15);
+    setTimeout(() => this.playTone(659.25, 'sine', 0.08, 0.15), 90);
+    setTimeout(() => this.playTone(783.99, 'sine', 0.2, 0.18), 180);
   }
 
   playWarning() {
     this.playTone(220, 'sawtooth', 0.2, 0.12);
+  }
+
+  speak(text, rate = 1.0, pitch = 1.0, onEndCallback = null) {
+    if (!this.voiceEnabled || !('speechSynthesis' in window)) {
+      if (onEndCallback) setTimeout(onEndCallback, 1500);
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const cleanText = text.replace(/\[.*?\]/g, ''); // strip stage notes like [Returns from hold]
+    const utter = new SpeechSynthesisUtterance(cleanText);
+    utter.rate = rate;
+    utter.pitch = pitch;
+
+    utter.onend = () => {
+      if (onEndCallback) onEndCallback();
+    };
+    utter.onerror = () => {
+      if (onEndCallback) onEndCallback();
+    };
+
+    this.currentUtterance = utter;
+    window.speechSynthesis.speak(utter);
+  }
+
+  stopSpeaking() {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    this.isCallPlaying = false;
   }
 }
 
 const sounds = new SoundEngine();
 
 /* ==========================================================================
-   Application State & Persistence
+   Application State
    ========================================================================== */
 const AppState = {
   theme: localStorage.getItem('csa_theme') || 'dark',
@@ -81,12 +114,12 @@ const AppState = {
   currentTurnIndex: 1,
   simTimerSeconds: 0,
   simTimerInterval: null,
-  simScores: {
-    empathy: 100,
-    compliance: 100,
-    fcr: 100
-  },
+  simScores: { empathy: 100, compliance: 100, fcr: 100 },
   scenarioCompleted: {},
+
+  // Mock Call Studio State
+  activeMockCallId: MOCK_CALLS_DATA[0].id,
+  isMockCallPlaying: false,
 
   // Exam State
   examQuestions: [...QUIZ_QUESTIONS],
@@ -95,7 +128,7 @@ const AppState = {
   examTimerInterval: null,
   examScore: null,
 
-  // Selected Macro Category
+  // Macros
   selectedMacroCategory: MACRO_CATEGORIES[0].id
 };
 
@@ -130,9 +163,9 @@ function formatTime(seconds) {
 function updateReadinessScore() {
   const completedScenarios = Object.keys(AppState.scenarioCompleted).length;
   const totalScenarios = SCENARIO_DATA.length;
-  const scenarioPct = (completedScenarios / totalScenarios) * 60; // 60% weight
+  const scenarioPct = (completedScenarios / totalScenarios) * 60;
   
-  const examPct = AppState.examScore !== null ? (AppState.examScore / 100) * 40 : 0; // 40% weight
+  const examPct = AppState.examScore !== null ? (AppState.examScore / 100) * 40 : 0;
   const totalReadiness = Math.round(scenarioPct + examPct);
 
   const bar = document.getElementById('global-readiness-bar');
@@ -172,6 +205,17 @@ function initThemeAndAudio() {
       localStorage.setItem('csa_sound', AppState.soundEnabled);
       updateSoundIcons();
       if (sounds.enabled) sounds.playClick();
+    });
+  }
+
+  const voiceBtn = document.getElementById('btn-voice-toggle');
+  if (voiceBtn) {
+    voiceBtn.classList.toggle('active-voice', sounds.voiceEnabled);
+    voiceBtn.addEventListener('click', () => {
+      sounds.voiceEnabled = !sounds.voiceEnabled;
+      localStorage.setItem('csa_voice', sounds.voiceEnabled);
+      voiceBtn.classList.toggle('active-voice', sounds.voiceEnabled);
+      showToast(sounds.voiceEnabled ? "Customer Voice Audio enabled" : "Customer Voice Audio muted", "🎙️");
     });
   }
 }
@@ -216,6 +260,7 @@ function initTabs() {
 function switchTab(tabId) {
   AppState.activeTab = tabId;
   sounds.playClick();
+  sounds.stopSpeaking();
 
   document.querySelectorAll('.nav-tab').forEach(t => {
     t.classList.toggle('active', t.getAttribute('data-tab') === tabId);
@@ -227,7 +272,7 @@ function switchTab(tabId) {
 }
 
 /* ==========================================================================
-   TAB 1: Simulator Logic
+   TAB 1: Interactive Simulator Logic
    ========================================================================== */
 function initSimulator() {
   renderScenarioSidebar();
@@ -292,10 +337,7 @@ function loadScenario(scenarioId) {
   const chatThread = document.getElementById('chat-thread-container');
   chatThread.innerHTML = '';
 
-  // Start Handling Timer
   startSimTimer();
-
-  // Render Turn 1
   renderTurn(1);
 }
 
@@ -340,15 +382,17 @@ function renderTurn(turnNum) {
     return;
   }
 
-  // Turn Indicator
   const turnBadge = document.getElementById('turn-indicator');
   if (turnBadge) turnBadge.textContent = `Step ${turnNum} of ${scenario.turns.length}`;
 
-  // Add Customer Message to chat
   addChatMessage('customer', scenario.customerName, turn.customerMessage);
   sounds.playMessagePing();
 
-  // Render Associate response options
+  // Speak customer audio if voice is enabled
+  if (sounds.voiceEnabled) {
+    sounds.speak(turn.customerMessage, 1.05, 0.95);
+  }
+
   const optionsContainer = document.getElementById('options-container');
   if (!optionsContainer) return;
 
@@ -390,10 +434,8 @@ function handleOptionSelected(optionId, currentTurn) {
   const selectedOpt = currentTurn.options.find(o => o.id === optionId);
   if (!selectedOpt) return;
 
-  // Add associate message with QA feedback
   addChatMessage('associate', 'You (Associate)', selectedOpt.text, selectedOpt.feedback, selectedOpt.quality);
 
-  // Apply score impacts
   const imp = selectedOpt.impact;
   AppState.simScores.empathy = Math.max(0, Math.min(100, AppState.simScores.empathy + imp.empathy));
   AppState.simScores.compliance = Math.max(0, Math.min(100, AppState.simScores.compliance + imp.compliance));
@@ -413,16 +455,15 @@ function handleOptionSelected(optionId, currentTurn) {
 
   updateLiveScoreUI();
 
-  // Clear options temporarily
   const optionsContainer = document.getElementById('options-container');
   if (optionsContainer) {
-    optionsContainer.innerHTML = '<div class="text-secondary font-mono" style="padding: 0.5rem;">Customer is reviewing your response...</div>';
+    optionsContainer.innerHTML = '<div class="text-secondary font-mono" style="padding: 0.5rem;">Customer is speaking...</div>';
   }
 
   setTimeout(() => {
     AppState.currentTurnIndex++;
     renderTurn(AppState.currentTurnIndex);
-  }, 900);
+  }, 1000);
 }
 
 function updateLiveScoreUI() {
@@ -443,7 +484,6 @@ function finishScenario() {
   AppState.scenarioCompleted[AppState.activeScenarioId] = avgScore;
   updateReadinessScore();
 
-  // Show Modal
   const modal = document.getElementById('modal-scenario-complete');
   if (modal) {
     document.getElementById('modal-score-circle').textContent = `${avgScore}%`;
@@ -457,7 +497,7 @@ function finishScenario() {
       if (avgScore >= 85) {
         feedbackBox.innerHTML = `
           <div class="feedback-bubble best">
-            <strong>✓ Nesting Ready:</strong> Excellent customer ownership, respectful policy adherence, and clean first contact resolution!
+            <strong>✓ Nesting Ready:</strong> Outstanding customer ownership, respectful policy adherence, and clean first contact resolution!
           </div>
         `;
       } else {
@@ -474,7 +514,161 @@ function finishScenario() {
 }
 
 /* ==========================================================================
-   TAB 2: SOP Knowledge Engine Logic
+   TAB 2: Mock Call Studio Logic
+   ========================================================================== */
+function initMockCallStudio() {
+  renderMockCallSidebar();
+  loadMockCall(AppState.activeMockCallId);
+
+  const playBtn = document.getElementById('btn-read-aloud-call');
+  const stopBtn = document.getElementById('btn-stop-audio-call');
+
+  if (playBtn) {
+    playBtn.addEventListener('click', startMockCallAudio);
+  }
+
+  if (stopBtn) {
+    stopBtn.addEventListener('click', stopMockCallAudio);
+  }
+}
+
+function renderMockCallSidebar() {
+  const container = document.getElementById('mockcall-nav-list');
+  if (!container) return;
+
+  container.innerHTML = MOCK_CALLS_DATA.map(call => `
+    <div class="mockcall-item ${call.id === AppState.activeMockCallId ? 'active' : ''}" data-call-id="${call.id}">
+      <div class="mockcall-item-title">${call.title}</div>
+      <div class="mockcall-item-meta">
+        <span>${call.category}</span> • 
+        <span>${call.callDuration}</span>
+      </div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.mockcall-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const id = item.getAttribute('data-call-id');
+      loadMockCall(id);
+    });
+  });
+}
+
+function loadMockCall(callId) {
+  stopMockCallAudio();
+  const call = MOCK_CALLS_DATA.find(c => c.id === callId) || MOCK_CALLS_DATA[0];
+  AppState.activeMockCallId = call.id;
+
+  renderMockCallSidebar();
+
+  // Update Header Bar
+  document.getElementById('call-active-title').textContent = call.title;
+  document.getElementById('call-caller-name').textContent = call.caller;
+  document.getElementById('call-order-id').textContent = call.orderId;
+  document.getElementById('call-duration').textContent = call.callDuration;
+
+  // Update Summary Box
+  document.getElementById('call-summary-box').innerHTML = `
+    <strong>Scenario Background & SOP Focus:</strong> ${call.summary}
+    <div style="margin-top: 0.35rem; color: var(--text-secondary); font-size: 0.78rem;">
+      Item: <strong>${call.item}</strong> • Tracking: <strong>${call.trackingStatus}</strong>
+    </div>
+  `;
+
+  // Render Transcript Rows
+  const transcriptContainer = document.getElementById('call-transcript-container');
+  if (transcriptContainer) {
+    transcriptContainer.innerHTML = call.transcript.map((line, idx) => `
+      <div class="transcript-row ${line.speaker.toLowerCase()}" id="t-row-${idx}">
+        <div class="transcript-speaker-line">
+          <span class="transcript-speaker">${line.speaker === 'Agent' ? '🎧 CSA Agent' : '🗣️ ' + call.caller}</span>
+          <span class="badge ${line.speaker === 'Agent' ? 'badge-accent' : 'badge-outline'}">${line.speaker}</span>
+        </div>
+        <p class="transcript-text">"${line.text}"</p>
+        <div class="transcript-note">💡 <span>${line.notes}</span></div>
+      </div>
+    `).join('');
+  }
+
+  // Render QA Scorecard Box
+  const qaBox = document.getElementById('call-qa-box');
+  if (qaBox) {
+    const card = call.qaScorecard;
+    qaBox.innerHTML = `
+      <h4 class="inner-title" style="margin-bottom: 0.75rem;">Trainer QA Scorecard & Key Coaching Takeaways</h4>
+      <div class="qa-scores-grid">
+        <div class="qa-score-item">
+          <span class="qa-score-label">Empathy & Tone</span>
+          <span class="qa-score-val">${card.empathyScore}</span>
+        </div>
+        <div class="qa-score-item">
+          <span class="qa-score-label">Process Compliance</span>
+          <span class="qa-score-val">${card.complianceScore}</span>
+        </div>
+        <div class="qa-score-item">
+          <span class="qa-score-label">First Contact Resolution</span>
+          <span class="qa-score-val">${card.fcrScore}</span>
+        </div>
+      </div>
+      <ul class="best-practices-list" style="margin-top: 0.5rem;">
+        ${card.keyTakeaways.map(t => `<li>✓ <strong>Key Practice:</strong> ${t}</li>`).join('')}
+      </ul>
+    `;
+  }
+}
+
+function startMockCallAudio() {
+  const call = MOCK_CALLS_DATA.find(c => c.id === AppState.activeMockCallId);
+  if (!call) return;
+
+  AppState.isMockCallPlaying = true;
+  document.getElementById('btn-read-aloud-call')?.classList.add('hidden');
+  document.getElementById('btn-stop-audio-call')?.classList.remove('hidden');
+
+  let currentLineIndex = 0;
+
+  function playNextLine() {
+    if (!AppState.isMockCallPlaying || currentLineIndex >= call.transcript.length) {
+      stopMockCallAudio();
+      return;
+    }
+
+    // Remove active highlight from all rows
+    document.querySelectorAll('.transcript-row').forEach(r => r.classList.remove('playing-active'));
+
+    const row = document.getElementById(`t-row-${currentLineIndex}`);
+    if (row) {
+      row.classList.add('playing-active');
+      row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    const line = call.transcript[currentLineIndex];
+    currentLineIndex++;
+
+    // Agent pitch vs Customer pitch for realistic voice distinction
+    const pitch = line.speaker === 'Agent' ? 1.1 : 0.9;
+    const rate = line.speaker === 'Agent' ? 1.05 : 1.0;
+
+    sounds.speak(line.text, rate, pitch, () => {
+      if (AppState.isMockCallPlaying) {
+        setTimeout(playNextLine, 600);
+      }
+    });
+  }
+
+  playNextLine();
+}
+
+function stopMockCallAudio() {
+  AppState.isMockCallPlaying = false;
+  sounds.stopSpeaking();
+  document.getElementById('btn-read-aloud-call')?.classList.remove('hidden');
+  document.getElementById('btn-stop-audio-call')?.classList.add('hidden');
+  document.querySelectorAll('.transcript-row').forEach(r => r.classList.remove('playing-active'));
+}
+
+/* ==========================================================================
+   TAB 3: SOP Knowledge Engine Logic
    ========================================================================== */
 function initSOPs() {
   renderSOPs(SOP_DATA);
@@ -503,10 +697,7 @@ function initSOPs() {
     renderSOPs(filtered);
   }
 
-  if (searchInput) {
-    searchInput.addEventListener('input', filterData);
-  }
-
+  if (searchInput) searchInput.addEventListener('input', filterData);
   if (clearBtn) {
     clearBtn.addEventListener('click', () => {
       if (searchInput) searchInput.value = '';
@@ -569,7 +760,7 @@ function renderSOPs(sops) {
 }
 
 /* ==========================================================================
-   TAB 3: QA & Certification Exam Logic
+   TAB 4: QA & Certification Exam Logic
    ========================================================================== */
 function initExam() {
   renderExamQuestions();
@@ -577,20 +768,15 @@ function initExam() {
   const startBtn = document.getElementById('btn-start-exam');
   const submitBtn = document.getElementById('btn-submit-exam');
 
-  if (startBtn) {
-    startBtn.addEventListener('click', startNewExam);
-  }
-
-  if (submitBtn) {
-    submitBtn.addEventListener('click', submitExam);
-  }
+  if (startBtn) startBtn.addEventListener('click', startNewExam);
+  if (submitBtn) submitBtn.addEventListener('click', submitExam);
 
   startNewExam();
 }
 
 function startNewExam() {
   AppState.examUserAnswers = {};
-  AppState.examTimeSeconds = 600; // 10 minutes
+  AppState.examTimeSeconds = 600;
   clearInterval(AppState.examTimerInterval);
 
   const banner = document.getElementById('exam-result-banner');
@@ -713,7 +899,7 @@ function submitExam() {
 }
 
 /* ==========================================================================
-   TAB 4: OJT Macros & Acronyms Logic
+   TAB 5: OJT Macros & Acronyms Logic
    ========================================================================== */
 function initNestingMacros() {
   renderMacroCategories();
@@ -802,7 +988,7 @@ function renderAcronyms(list) {
 }
 
 /* ==========================================================================
-   TAB 5: SME Escalation Builder Logic
+   TAB 6: SME Escalation Builder Logic
    ========================================================================== */
 function initSMEBuilder() {
   const generateBtn = document.getElementById('btn-generate-sme');
@@ -859,7 +1045,6 @@ function initSMEBuilder() {
     });
   }
 
-  // Initial generation
   generateEscalation();
 }
 
@@ -894,7 +1079,7 @@ function fallbackCopy(text, successMsg) {
 }
 
 /* ==========================================================================
-   Modal Close Handlers
+   Modal Handlers
    ========================================================================== */
 function initModals() {
   const modal = document.getElementById('modal-scenario-complete');
@@ -918,12 +1103,13 @@ function initModals() {
 }
 
 /* ==========================================================================
-   App Bootstrap
+   Bootstrap
    ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
   initThemeAndAudio();
   initTabs();
   initSimulator();
+  initMockCallStudio();
   initSOPs();
   initExam();
   initNestingMacros();

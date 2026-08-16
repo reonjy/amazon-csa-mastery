@@ -2,88 +2,81 @@
 export const SCENARIO_DATA = [
   {
     id: "sc-dnr-prime",
-    title: "Late Birthday Gift - Delivered Not Received (DNR)",
-    customerName: "Sarah Jenkins",
-    customerType: "Prime Member (10+ Years, High Value)",
-    channel: "Live Chat",
-    initialMood: "angry", // angry, annoyed, neutral, pleasant
+    title: "Lost Package (DNR >48h) - Essential Air Purifier",
+    customerName: "Marcus Vance",
+    customerType: "Prime Member (6 Years)",
+    channel: "Inbound Phone Call",
+    initialMood: "angry",
     orderInfo: {
-      orderId: "114-8923011-4458921",
-      item: "LEGO Star Wars Millennium Falcon ($169.99)",
-      status: "Delivered 3 hours ago (Carrier: AMZL)",
-      photoOnDelivery: "Front Porch (Blurry corner)",
-      deliveryTime: "Today at 11:15 AM"
+      orderId: "113-9081234-5512309",
+      item: "Levoit Air Purifier Core 400S ($219.99)",
+      status: "Delivered 3 days ago (Carrier: AMZL)",
+      photoOnDelivery: "Wrong complex side gate (GPS mismatch)",
+      deliveryTime: "Aug 13, 2:15 PM"
     },
-    background: "Customer ordered a birthday gift for her son's party tonight. Tracking shows delivered 3 hours ago, but nothing is on her porch. She is furious and demands an immediate resolution.",
+    background: "Customer ordered an air purifier for severe allergy season. Tracking shows delivered 3 days ago (>48 hours). Customer waited the mandatory 48 hours and checked neighbors. He is frustrated and needs a prompt solution.",
     turns: [
       {
         turnIndex: 1,
-        customerMessage: "Where is my package?! Your app says it was delivered 3 hours ago to my front porch, but there is NOTHING there! My son's birthday party is tonight and this is unacceptable!",
+        customerMessage: "Hi, my name is Marcus Vance. Your app says my Levoit Air Purifier was delivered 3 days ago, but there is nothing here. I waited the 48 hours like your email told me to, but still nothing!",
         options: [
           {
             id: "opt-1a",
-            text: "Hello Sarah! I am so sorry to hear this, especially since it's for your son's birthday. I understand how stressful this is. Let me immediately check your order details and delivery photo to see what happened.",
+            text: "Thank you for confirming your name, Marcus. I am so sorry about the missing air purifier, especially after you waited the 48 hours. Let me pull up your account right now and check the delivery records to resolve this for you.",
             quality: "best",
             impact: { mood: "annoyed", empathy: 25, compliance: 25, fcr: 20, timePenalty: 0 },
-            feedback: "Excellent! Warm, empathetic acknowledgment with immediate ownership and clear statement of action."
+            feedback: "Excellent! Empathetic acknowledgment, gratitude for waiting 48h, and immediate ownership."
           },
           {
             id: "opt-1b",
-            text: "Please wait. Our policy says you have to wait 48 hours after delivery before we can do anything. Go check with your neighbors.",
+            text: "Drivers don't make mistakes. You need to walk around your whole neighborhood and search again before we can do anything.",
             quality: "bad",
-            impact: { mood: "furious", empathy: -30, compliance: -10, fcr: -20, timePenalty: 30 },
-            feedback: "Terrible phrasing! Robotic, abrupt, and dismissive of the customer's urgent emotional context."
+            impact: { mood: "furious", empathy: -40, compliance: -20, fcr: -30, timePenalty: 30 },
+            feedback: "Terrible phrasing! Blaming the customer and ignoring the 48h DNR SOP."
           },
           {
             id: "opt-1c",
-            text: "I will just refund you right now since you are a 10-year Prime member. Done!",
+            text: "I will just refund you immediately without checking anything.",
             quality: "risky",
-            impact: { mood: "pleasant", empathy: 15, compliance: -40, fcr: -10, timePenalty: 10 },
-            feedback: "Compliance Violation! Refunding without checking tracking, delivery photo, or 48-hour DNR SOP breaks protocol and fails QA."
+            impact: { mood: "pleasant", empathy: 10, compliance: -30, fcr: -10, timePenalty: 0 },
+            feedback: "Risky! Always check POD, GPS, and account history before applying concessions."
           }
         ]
       },
       {
         turnIndex: 2,
-        customerMessage: "Thank you for checking. I checked my bushes, garage, and asked my next-door neighbor. Nothing. Is there any way the driver delivered it to the wrong address?",
+        customerMessage: "Thank you. My allergies have been acting up and I really need it as soon as possible. What are my options?",
         options: [
           {
             id: "opt-2a",
-            text: "I reviewed the driver's delivery photo and GPS ping, and it appears it may have been placed near the side gate. Since you've already checked and the party is tonight, let me check stock for same-day replacement from a local fulfillment center or process an immediate account gift card refund so you can pick it up locally.",
+            text: "I reviewed the driver's GPS ping and it appears there was a delivery mismatch. Since it has been past 48 hours, I can issue an immediate free replacement with One-Day Priority Shipping so it arrives tomorrow by 1 PM, or issue a full refund to your card. Which do you prefer?",
             quality: "best",
             impact: { mood: "pleasant", empathy: 25, compliance: 25, fcr: 30, timePenalty: 0 },
-            feedback: "Superb! You checked the CRM details, acknowledged their situation, and provided flexible, policy-compliant solutions."
+            feedback: "Superb! Validated GPS mismatch, adhered to DNR SOP, and gave flexible customer choices."
           },
           {
             id: "opt-2b",
-            text: "The GPS says it was delivered correctly so the driver did their job. You will have to wait 48 hours regardless.",
+            text: "You will have to file a claim with AMZL carrier yourself.",
             quality: "bad",
-            impact: { mood: "furious", empathy: -30, compliance: -20, fcr: -30, timePenalty: 45 },
-            feedback: "Unacceptable! Accusing the customer or being rigid without offering constructive assistance causes severe escalations."
-          },
-          {
-            id: "opt-2c",
-            text: "I will file a complaint against the driver right now and give you a $50 gift card for your trouble.",
-            quality: "risky",
-            impact: { mood: "neutral", empathy: 10, compliance: -30, fcr: 0, timePenalty: 15 },
-            feedback: "Concession Violation! $50 courtesy credit exceeds standard authorization limits without lead approval."
+            impact: { mood: "furious", empathy: -30, compliance: -40, fcr: -40, timePenalty: 30 },
+            feedback: "Severe QA violation! AMZL is internal Amazon logistics; transferring customers to carrier is prohibited."
           }
         ]
       },
       {
         turnIndex: 3,
-        customerMessage: "An immediate gift card refund would be a lifesaver! I can drive to the local retail store and buy it before the party starts. Thank you so much!",
+        customerMessage: "Tomorrow by 1 PM would be fantastic. Please send the replacement.",
         options: [
           {
             id: "opt-3a",
-            text: "I have successfully processed the full refund of $169.99 to your Amazon Gift Card balance—it is available in your account right now. I have also submitted a carrier inquiry to ensure driver accuracy. Is there anything else I can assist you with today, Sarah?",
+            text: "I have placed replacement order #113-4491820 with Priority Next-Day Delivery at $0.00 charge, arriving tomorrow before 1 PM. I also filed an internal carrier investigation for the lost package. Have I resolved all of your questions today, Marcus?",
             quality: "best",
             impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 30, timePenalty: 0 },
-            feedback: "Outstanding wrap-up! Confirmation of funds, background carrier report logged, and standard professional closing."
+            feedback: "Outstanding wrap-up! Clear order details, zero charges confirmed, carrier report logged, and clean FCR check."
           },
           {
             id: "opt-3b",
-            text: "Refund done. Bye.",
+            text: "Done. Bye.",
             quality: "bad",
             impact: { mood: "annoyed", empathy: -15, compliance: -10, fcr: 10, timePenalty: 10 },
             feedback: "Abrupt wrap-up without validation or professional sign-off hurts your CSAT score."
@@ -93,8 +86,124 @@ export const SCENARIO_DATA = [
     ]
   },
   {
+    id: "sc-damaged-oil",
+    title: "Damaged Glass & Leaking Liquid (Returnless Concession)",
+    customerName: "Linda Chen",
+    customerType: "Amazon Customer (3 Years)",
+    channel: "Inbound Phone Call",
+    initialMood: "angry",
+    orderInfo: {
+      orderId: "111-7782910-1092834",
+      item: "1-Gallon Extra Virgin Olive Oil ($38.50)",
+      status: "Delivered 2 hours ago",
+      photoOnDelivery: "Package on porch (Stained box)",
+      deliveryTime: "Today at 10:45 AM"
+    },
+    background: "Customer received a shattered glass bottle of olive oil that soaked the box and leaked over her kitchen floor. She is upset about broken glass and safety.",
+    turns: [
+      {
+        turnIndex: 1,
+        customerMessage: "I just opened my package and it's a complete nightmare! The glass bottle of olive oil completely shattered in the box! Oil is all over my floor and there's broken glass everywhere. Do you expect me to pack up broken glass and ship it back?!",
+        options: [
+          {
+            id: "opt-oil-1a",
+            text: "Oh no, Linda! I am so sorry to hear that. Please do NOT handle that broken glass directly so you don't risk injury. Under our Hazmat & Liquid SOP, you will NOT have to return anything. Let me take care of your refund right now.",
+            quality: "best",
+            impact: { mood: "annoyed", empathy: 30, compliance: 30, fcr: 25, timePenalty: 0 },
+            feedback: "Flawless safety-first empathy! Immediate relief that returning broken glass is not required."
+          },
+          {
+            id: "opt-oil-1b",
+            text: "Our policy requires you to box up the broken glass, print a label, and take it to UPS if you want a refund.",
+            quality: "bad",
+            impact: { mood: "furious", empathy: -50, compliance: -50, fcr: -40, timePenalty: 25 },
+            feedback: "Critical Hazard Violation! Shipping broken glass or leaking hazardous goods violates carrier safety regulations."
+          }
+        ]
+      },
+      {
+        turnIndex: 2,
+        customerMessage: "Thank goodness! I was terrified of cutting my hands. How soon will the refund show up?",
+        options: [
+          {
+            id: "opt-oil-2a",
+            text: "I have processed the full refund of $38.50 back to your original Visa card. It will reflect on your statement in 3 to 5 business days, and I just sent the confirmation receipt to your email. Please safely discard the damaged package. Is there anything else I can help you with today, Linda?",
+            quality: "best",
+            impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 35, timePenalty: 0 },
+            feedback: "Superb First Contact Resolution! Clear financial timeline, disposal advice, and polite closing."
+          },
+          {
+            id: "opt-oil-2b",
+            text: "Refund is in system. Check your bank later.",
+            quality: "bad",
+            impact: { mood: "neutral", empathy: -10, compliance: 0, fcr: 10, timePenalty: 10 },
+            feedback: "Too casual; lacks clear bank timeline and professional courtesy."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "sc-wrong-formula",
+    title: "Wrong Item Received - Urgent Baby Formula Mix-up",
+    customerName: "Daniel Roberts",
+    customerType: "Prime Member (4 Years)",
+    channel: "Inbound Phone Call",
+    initialMood: "angry",
+    orderInfo: {
+      orderId: "114-1192830-4819201",
+      item: "Enfamil Infant Formula 4-Pack ($124.00)",
+      status: "Delivered 1 hour ago",
+      receivedItem: "Heavy Duty Gardening Gloves ($14.99)",
+      deliveryTime: "Today at 1:30 PM"
+    },
+    background: "Customer ordered infant formula for his baby but received gardening gloves instead. He is running out of formula for his infant tonight.",
+    turns: [
+      {
+        turnIndex: 1,
+        customerMessage: "I ordered baby formula for my 6-month-old that was supposed to arrive today, and I opened the box to find gardening gloves! I am running out of formula for my baby tonight! What are you going to do to fix this right now?!",
+        options: [
+          {
+            id: "opt-form-1a",
+            text: "Daniel, I completely understand the urgency of this situation, and I am so deeply sorry for this warehouse mix-up. Let me immediately check local same-day inventory to get your baby formula dispatched this evening.",
+            quality: "best",
+            impact: { mood: "annoyed", empathy: 30, compliance: 25, fcr: 25, timePenalty: 0 },
+            feedback: "Outstanding empathy acknowledging baby formula urgency and taking immediate priority action."
+          },
+          {
+            id: "opt-form-1b",
+            text: "Mistakes happen. Please return the gloves and we will ship the formula in 5 to 7 business days.",
+            quality: "bad",
+            impact: { mood: "furious", empathy: -50, compliance: -40, fcr: -40, timePenalty: 30 },
+            feedback: "Catastrophic failure of Customer Obsession! Treating urgent infant essentials like non-essential goods causes extreme escalations."
+          }
+        ]
+      },
+      {
+        turnIndex: 2,
+        customerMessage: "Please check, that would be a lifesaver. And what do I do with these gloves?",
+        options: [
+          {
+            id: "opt-form-2a",
+            text: "I located stock at our local sub-same-day delivery station and placed an emergency replacement at $0.00 charge, arriving tonight between 5:00 PM and 10:00 PM. For the gloves, I emailed you a prepaid QR code so you can drop them off at any Kohl's or UPS in the next 30 days whenever convenient. Have I taken care of everything for you, Daniel?",
+            quality: "best",
+            impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 35, timePenalty: 0 },
+            feedback: "Flawless resolution! Sub-same day dispatch arranged, no friction return QR code provided, and complete customer reassurance."
+          },
+          {
+            id: "opt-form-2b",
+            text: "I reordered it. Bye.",
+            quality: "bad",
+            impact: { mood: "neutral", empathy: -20, compliance: 0, fcr: 10, timePenalty: 10 },
+            feedback: "Incomplete communication and abrupt sign-off."
+          }
+        ]
+      }
+    ]
+  },
+  {
     id: "sc-security-phish",
-    title: "Account Security & Verification (Zero-Tolerance Test)",
+    title: "Account Security & Address Reroute (Zero-Tolerance Test)",
     customerName: "David Miller (?)",
     customerType: "Unverified Caller / High Risk",
     channel: "Inbound Phone Call",
@@ -125,13 +234,6 @@ export const SCENARIO_DATA = [
             quality: "bad",
             impact: { mood: "pleasant", empathy: 10, compliance: -100, fcr: -100, timePenalty: 0 },
             feedback: "CRITICAL QA FAIL! Never modify shipment addresses on high-value orders without strict secondary authentication."
-          },
-          {
-            id: "opt-sec-1c",
-            text: "Your credit card ending in 4921 is billed to 1424 Pine St Seattle, right? Can you confirm if that's you?",
-            quality: "bad",
-            impact: { mood: "pleasant", empathy: 5, compliance: -80, fcr: -50, timePenalty: 0 },
-            feedback: "Security Breach! You gave away the customer's private data instead of asking them to verify it."
           }
         ]
       },
@@ -152,23 +254,16 @@ export const SCENARIO_DATA = [
             quality: "bad",
             impact: { mood: "pleasant", empathy: 5, compliance: -100, fcr: -100, timePenalty: 0 },
             feedback: "Severe Security Incident! Unauthorized address reroute on $2,500 laptop leads to immediate termination in production."
-          },
-          {
-            id: "opt-sec-2c",
-            text: "You sound like a scammer. I am flagging your account and hanging up.",
-            quality: "bad",
-            impact: { mood: "furious", empathy: -50, compliance: -30, fcr: -50, timePenalty: 20 },
-            feedback: "Unprofessional conduct! Never accuse a customer of fraud directly. Follow standard polite verification failure protocol."
           }
         ]
       },
       {
         turnIndex: 3,
-        customerMessage: "Ugh, fine. Let me check my phone... The code is 849201. Now will you update it?",
+        customerMessage: "Ugh, fine. The code is 849201. Now will you update it?",
         options: [
           {
             id: "opt-sec-3a",
-            text: "Thank you for verifying the passcode. I have confirmed your identity. According to carrier policy for items already in transit with high value, packages cannot be rerouted mid-transit to a new state. However, I can request a carrier hold at a secure pickup locker in Seattle or cancel and reorder to your Miami address upon return. Which do you prefer?",
+            text: "Thank you for verifying the passcode. I have confirmed your identity. According to carrier policy for items already in transit with high value, packages cannot be rerouted mid-transit across states. However, I can request a carrier hold at a secure pickup locker in Seattle or cancel and reorder to your Miami address upon return. Which do you prefer?",
             quality: "best",
             impact: { mood: "pleasant", empathy: 25, compliance: 25, fcr: 30, timePenalty: 0 },
             feedback: "Masterclass resolution! Verified identity properly, followed carrier routing SOP, and gave clear legitimate options."
@@ -185,58 +280,58 @@ export const SCENARIO_DATA = [
     ]
   },
   {
-    id: "sc-digital-video",
-    title: "Accidental Prime Video Rental by Child",
-    customerName: "Robert Garcia",
-    customerType: "Prime Member",
-    channel: "Live Chat",
-    initialMood: "annoyed",
+    id: "sc-prime-billing",
+    title: "Prime Annual Auto-Renewal Billing Inquiry",
+    customerName: "George Henderson",
+    customerType: "Amazon Customer (5 Years)",
+    channel: "Inbound Phone Call",
+    initialMood: "angry",
     orderInfo: {
-      orderId: "D01-9238102-4819283",
-      item: "Dune: Part Two (4K UHD Rental - $19.99)",
-      status: "Purchased 45 minutes ago",
-      watchDuration: "0 minutes (Not streamed)",
-      device: "Living Room Fire TV Stick"
+      orderId: "SUB-PRIME-2026-8819",
+      item: "Amazon Prime Annual Membership ($139.00)",
+      status: "Billed 2 days ago",
+      benefitUsage: "0 benefits used since renewal date",
+      renewalDate: "Aug 14"
     },
-    background: "Customer was billed $19.99 for a movie rental. His 7-year-old clicked buy by accident. He hasn't watched it and wants a refund and wants to make sure it doesn't happen again.",
+    background: "Customer was billed $139 for annual Prime renewal. He forgot he enrolled last year and hasn't used any benefits. He is calling to dispute the charge.",
     turns: [
       {
         turnIndex: 1,
-        customerMessage: "I just got an email that my card was charged $19.99 for Dune on Prime Video! My kid was playing with the remote. We didn't watch it. Can I get my money back?",
+        customerMessage: "I just checked my bank statement and I see an unauthorized $139 charge from Amazon! I did not buy anything for $139. Did my card get hacked?",
         options: [
           {
-            id: "opt-dig-1a",
-            text: "Hello Robert! I can certainly help with that. Accidental clicks happen all the time with remotes! I see the rental on your account from 45 minutes ago with 0 watch time. Let me process an immediate refund for you.",
+            id: "opt-prime-1a",
+            text: "Hello George, thank you for confirming your info. I understand that seeing an unexpected charge is alarming! Let me check your account billing history right away to identify this charge for you.",
             quality: "best",
-            impact: { mood: "pleasant", empathy: 25, compliance: 25, fcr: 25, timePenalty: 0 },
-            feedback: "Great warmth, reassurance, and quick SOP check on watch duration."
+            impact: { mood: "annoyed", empathy: 25, compliance: 25, fcr: 20, timePenalty: 0 },
+            feedback: "Great calm, reassuring tone that diffuses fraud anxiety."
           },
           {
-            id: "opt-dig-1b",
-            text: "Digital sales are final and non-refundable once purchased according to terms of service.",
+            id: "opt-prime-1b",
+            text: "Call your bank and tell them you forgot your subscription.",
             quality: "bad",
-            impact: { mood: "furious", empathy: -30, compliance: -30, fcr: -20, timePenalty: 15 },
-            feedback: "Incorrect SOP! Prime Video allows one-time accidental purchase refunds if watch time is 0% within 48 hours."
+            impact: { mood: "furious", empathy: -40, compliance: -30, fcr: -30, timePenalty: 20 },
+            feedback: "Dismissive and disrespectful."
           }
         ]
       },
       {
         turnIndex: 2,
-        customerMessage: "Thank you so much! How do I stop my kid from doing this again on the Fire TV?",
+        customerMessage: "Please check, because I don't remember authorizing $139.",
         options: [
           {
-            id: "opt-dig-2a",
-            text: "I've processed the full $19.99 refund back to your card (3-5 business days). To prevent future accidental purchases, you can easily enable a 5-digit PIN on your Fire TV by going to Settings > Preferences > Parental Controls > Turn ON and set PIN for purchases. Would you like me to stay on chat while you test that out?",
+            id: "opt-prime-2a",
+            text: "I see the charge, George. It was your annual Prime Membership auto-renewal that processed 2 days ago. Since you have not used any Prime shipping or video benefits since renewal, our policy allows a 100% full refund of the $139.00 upon cancellation. I can process that for you right now.",
             quality: "best",
             impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 35, timePenalty: 0 },
-            feedback: "Outstanding First Contact Resolution (FCR)! Solved the immediate billing issue AND prevented future customer friction."
+            feedback: "Flawless SOP application! Explained root cause, checked benefit usage, and authorized full refund."
           },
           {
-            id: "opt-dig-2b",
-            text: "Just don't give the remote to your kid. Anything else?",
+            id: "opt-prime-2b",
+            text: "All subscription charges are strictly non-refundable once billed.",
             quality: "bad",
-            impact: { mood: "annoyed", empathy: -30, compliance: -10, fcr: -10, timePenalty: 10 },
-            feedback: "Condescending and unhelpful."
+            impact: { mood: "furious", empathy: -30, compliance: -40, fcr: -30, timePenalty: 15 },
+            feedback: "Incorrect policy! Unused Prime memberships qualify for 100% full refund."
           }
         ]
       }
@@ -245,53 +340,53 @@ export const SCENARIO_DATA = [
   {
     id: "sc-marketplace-atoz",
     title: "Third-Party Marketplace Dispute & A-to-z Claim",
-    customerName: "Elena Rostova",
-    customerType: "Amazon Customer",
-    channel: "Live Chat",
+    customerName: "Maria Santos",
+    customerType: "Prime Member (2 Years)",
+    channel: "Inbound Phone Call",
     initialMood: "angry",
     orderInfo: {
-      orderId: "702-8192031-1029381",
-      item: "Vintage Leather Jacket ($145.00)",
-      seller: "RetroVibe Apparel (FBM - Merchant Fulfilled)",
-      deliveredDate: "5 days ago",
-      messagingHistory: "Customer messaged seller 3 days ago requesting return for wrong size. Seller has not replied."
+      orderId: "701-9928104-0019283",
+      item: "Cordless Drill Kit 20V ($119.00)",
+      seller: "TechPro Direct (FBM - Merchant Fulfilled)",
+      status: "Delivered 6 days ago (Defective Battery)",
+      messagingHistory: "Customer messaged seller 3 days ago (>72h). Seller demanded $25 return fee."
     },
-    background: "Customer purchased from a 3P seller. Received wrong size. She followed SOP and messaged seller 3 days (>72 hours) ago with zero response. She wants Amazon to step in.",
+    background: "Customer received a defective drill from 3P seller. Seller refused prepaid return label and demanded $25 restocking fee. Customer messaged seller 3 days ago.",
     turns: [
       {
         turnIndex: 1,
-        customerMessage: "I ordered a jacket from a third-party seller on Amazon. It came in Small instead of Large. I messaged the seller 3 days ago and they are completely ghosting me! Why isn't Amazon doing anything?",
+        customerMessage: "I bought a drill from a 3rd party seller on Amazon that arrived with a cracked battery. The seller replied saying I have to pay $25 shipping and restocking fees to return a broken drill! Why is Amazon letting sellers rip people off?",
         options: [
           {
             id: "opt-3p-1a",
-            text: "Hello Elena, I understand your frustration with the unresponsive seller. Let me check your message history with them. Since you reached out over 48 hours ago without a response, I can protect you under our A-to-z Guarantee right now.",
+            text: "Maria, I am so sorry you had to deal with that! Third-party sellers on Amazon are required to match Amazon's return policies, and you should NEVER have to pay return fees for defective items. Let me review your message history with this seller right now.",
             quality: "best",
-            impact: { mood: "pleasant", empathy: 25, compliance: 25, fcr: 25, timePenalty: 0 },
-            feedback: "Excellent! You validated the 48-hour seller response window and correctly invoked the A-to-z Guarantee protocol."
+            impact: { mood: "annoyed", empathy: 25, compliance: 25, fcr: 25, timePenalty: 0 },
+            feedback: "Reassures customer on marketplace standards and checks buyer-seller messaging."
           },
           {
             id: "opt-3p-1b",
-            text: "Amazon is just a platform. You need to call the seller yourself or contact your bank.",
+            text: "Amazon is just a middleman. You have to pay whatever fee the seller charges.",
             quality: "bad",
             impact: { mood: "furious", empathy: -40, compliance: -50, fcr: -40, timePenalty: 20 },
-            feedback: "Major Quality Violation! Suggesting a customer file a chargeback or brushing off marketplace accountability breaks Amazon's customer promise."
+            feedback: "Major Quality Violation! 3P sellers cannot charge return fees on defective goods."
           }
         ]
       },
       {
         turnIndex: 2,
-        customerMessage: "Please file the claim! How long will it take to get my money back?",
+        customerMessage: "Please check the messages, he was very rude.",
         options: [
           {
             id: "opt-3p-2a",
-            text: "I have submitted the A-to-z Guarantee Claim for $145.00 on your behalf under reason code 'Item Materially Different / Seller Unresponsive'. Our claims team will review and resolve this within 3 to 5 business days, and you will receive email updates. You don't need to take any further action with the seller.",
+            text: "I confirmed that more than 48 hours have passed and the seller refused a valid return. You are 100% covered under our Amazon A-to-z Guarantee! I have filed the claim for the full $119.00 refund right now. You don't have to return the drill or pay any fees, and the claims team will finalize it within 3-5 business days. Have I resolved this completely for you?",
             quality: "best",
-            impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 30, timePenalty: 0 },
-            feedback: "Flawless execution! Clear timeline, claim submitted with proper reason code, and complete peace of mind for the customer."
+            impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 35, timePenalty: 0 },
+            feedback: "Flawless execution! Filed A-to-z claim with proper reason code, waived fees, and provided complete customer peace of mind."
           },
           {
             id: "opt-3p-2b",
-            text: "I filed it. You will get an email sometime next month.",
+            text: "I filed it. Bye.",
             quality: "bad",
             impact: { mood: "annoyed", empathy: -15, compliance: -10, fcr: 10, timePenalty: 0 },
             feedback: "Vague timeline and dismissive tone."
