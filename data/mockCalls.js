@@ -892,6 +892,97 @@ export const MOCK_CALLS_DATA = [
         "Prevented social engineering / unauthorized account takeover."
       ]
     }
+  },
+  {
+    id: "call-replacement-unverified",
+    title: "Order Replacement Denied — Unverified Account & Shared Account Dispute",
+    category: "Replacement & Security",
+    callType: "Inbound Phone Call",
+    caller: "Kevin Brooks",
+    customerTenure: "Unverified Recipient / Ex-Roommate",
+    orderId: "112-7729104-8839102",
+    item: "De'Longhi Magnifica Espresso Machine ($649.95)",
+    trackingStatus: "Delivered 2 days ago (Customer reports damaged pump)",
+    callDuration: "3 min 35 sec",
+    summary: "Caller received a damaged $650 espresso machine and urgently demands a replacement. When Mark attempts account verification, the caller fails email, billing address, and phone OTP, stating his ex-roommate ordered it. Mark strictly upholds Zero-Tolerance SOP by refusing to dispatch an unverified replacement order while guiding him to gift returns and app self-service.",
+    transcript: [
+      {
+        speaker: "Mark (Agent)",
+        text: "Thank you for calling Amazon Customer Support. My name is Mark. May I please have your full name and the email address linked to the Amazon account?",
+        notes: "Standard opening and mandatory 2-point authentication request."
+      },
+      {
+        speaker: "Customer",
+        text: "Hi Mark, my name is Kevin Brooks. I'm calling about a De'Longhi espresso machine that arrived broken (#112-7729104). The water pump is completely cracked and leaking water all over the place. I need an immediate replacement sent out right now!",
+        notes: "Customer explains damaged item issue and demands immediate replacement."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Hello Kevin, I am so sorry to hear that your De'Longhi espresso machine arrived with a damaged pump! I know how exciting it is to get a new espresso machine, and that must be very disappointing. I can certainly look into this for you. To protect the account and proceed with order actions, could you please verify the full billing address and the last 4 digits of the payment method on file?",
+        notes: "Empathy statement followed by strict mandatory 2-point verification requirement."
+      },
+      {
+        speaker: "Customer",
+        text: "Uh, I didn't buy it with my credit card. My former roommate Brian bought it for our shared apartment before he moved out last month. I don't know his card number or where he lives now! The box has my name on the shipping label though. Look at order 112-7729104 and just ship the replacement to my apartment!",
+        notes: "Caller fails verification. Admits account belongs to a third party (former roommate)."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "I completely understand the situation, Kevin, and I appreciate you clarifying that. However, creating a replacement order is generating a brand-new financial shipment on an account with stored payment methods. For your protection and the account owner's security, Amazon policy strictly prevents associates from issuing replacement orders or modifying orders on unverified accounts.",
+        notes: "Explains the exact security reasoning: Replacement orders generate new financial transactions requiring account owner verification."
+      },
+      {
+        speaker: "Customer",
+        text: "Are you kidding me, Mark?! The machine is broken! It's right here in front of me! Why can't you just create a replacement order if the item is clearly defective?!",
+        notes: "Customer pushes back on replacement denial."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "I truly understand your frustration, Kevin. If we allowed anyone possessing an order number to order replacements without identity verification, it would create severe security risks for account holders. We have two legitimate ways to resolve this: 1) You can reach out to Brian and have him log into his Amazon app, where he can click 'Return or Replace Item' in under a minute with zero fees; or 2) If it was given to you as a gift, you can visit amazon.com/returns/gift with the 17-digit Order ID to process a gift return for Amazon credit in your own name.",
+        notes: "Stands firm on Zero-Tolerance policy while providing two constructive, compliant resolution paths."
+      },
+      {
+        speaker: "Customer",
+        text: "Wait, if I use the Gift Returns link with the order number, I can do it under my own Amazon account without needing Brian's card?",
+        notes: "Customer realizes gift return path works."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Exactly! At amazon.com/returns/gift, you enter order #112-7729104. It will provide a prepaid drop-off label, and once scanned, the refund credit will be issued directly to YOUR personal Amazon account so you can purchase a brand new machine yourself.",
+        notes: "Clear, step-by-step guidance on official Gift Return / Replacement portal."
+      },
+      {
+        speaker: "Customer",
+        text: "That actually solves my problem completely. I'll go to the gift return page right now. Thank you for explaining that, Mark.",
+        notes: "Customer relieved; compliance 100% maintained."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "You are very welcome, Kevin! Have I answered all of your questions regarding the replacement and return options today?",
+        notes: "FCR verification."
+      },
+      {
+        speaker: "Customer",
+        text: "Yes, you did. Have a great day, Mark!",
+        notes: "Call completed successfully."
+      },
+      {
+        speaker: "Mark (Agent)",
+        text: "Thank you for calling Amazon, Kevin. Have a wonderful day and enjoy your espresso machine once replaced!",
+        notes: "Warm, professional closing."
+      }
+    ],
+    qaScorecard: {
+      empathyScore: "100%",
+      complianceScore: "100%",
+      fcrScore: "100%",
+      keyTakeaways: [
+        "ZERO-TOLERANCE: Refused creating a replacement order on an unverified third-party account.",
+        "Educated customer that replacement orders are financial transactions requiring owner verification.",
+        "Successfully redirected customer to the official Amazon Gift Return portal (amazon.com/returns/gift)."
+      ]
+    }
   }
 ];
+
 

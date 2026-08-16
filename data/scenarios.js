@@ -588,5 +588,63 @@ export const SCENARIO_DATA = [
         ]
       }
     ]
+  },
+  {
+    id: "sc-replacement-unverified",
+    title: "Damaged Item Replacement Request on Unverified Account",
+    customerName: "Kevin Brooks",
+    customerType: "Unverified Recipient / Ex-Roommate",
+    channel: "Inbound Phone Call",
+    initialMood: "angry",
+    orderInfo: {
+      orderId: "112-7729104-8839102",
+      item: "De'Longhi Magnifica Espresso Machine ($649.95)",
+      status: "Delivered 2 days ago (Broken Pump Reported)",
+      shippingName: "Kevin Brooks (Recipient)",
+      purchaserName: "Brian Miller (Account Owner)"
+    },
+    background: "Caller received a damaged $650 espresso machine ordered by his former roommate Brian. Kevin is angry and demands an immediate replacement sent to his address, but cannot verify the account email, billing address, or payment method.",
+    turns: [
+      {
+        turnIndex: 1,
+        customerMessage: "Hi Mark, my name is Kevin Brooks. I'm calling about a De'Longhi espresso machine (#112-7729104) that arrived with a cracked pump leaking water everywhere. I need an immediate replacement sent to my apartment right now!",
+        options: [
+          {
+            id: "opt-rep-unv-1a",
+            text: "Hello Kevin, my name is Mark. I am so sorry that your espresso machine arrived with a damaged pump! I can certainly look into this for you. To protect the account and proceed with order actions, could you please verify the full billing address and the last 4 digits of the payment method on file?",
+            quality: "best",
+            impact: { mood: "neutral", empathy: 25, compliance: 25, fcr: 20, timePenalty: 0 },
+            feedback: "Flawless compliance! Mark pairs warm empathy with mandatory 2-point identity authentication."
+          },
+          {
+            id: "opt-rep-unv-1b",
+            text: "Sure! Since the pump is broken, I will dispatch a brand new $650 machine to you right away.",
+            quality: "bad",
+            impact: { mood: "pleasant", empathy: 15, compliance: -100, fcr: -100, timePenalty: 0 },
+            feedback: "CRITICAL QA FAIL! Never issue replacement orders without verifying the primary account owner."
+          }
+        ]
+      },
+      {
+        turnIndex: 2,
+        customerMessage: "I didn't buy it with my card! My former roommate Brian bought it for our apartment before moving out. I don't know his card number or where he lives now. The box has my name on it! Just ship the replacement to me!",
+        options: [
+          {
+            id: "opt-rep-unv-2a",
+            text: "I completely understand the frustration, Kevin. However, replacement orders generate a new shipment on an account with saved payment information. For security, associates cannot create replacement orders on unverified accounts. You have two options: Brian can click 'Return or Replace' in his Amazon app in 1 minute, or if it was a gift, you can use amazon.com/returns/gift with order #112-7729104 to receive Amazon credit in your own name.",
+            quality: "best",
+            impact: { mood: "pleasant", empathy: 25, compliance: 30, fcr: 35, timePenalty: 0 },
+            feedback: "Outstanding resolution! Upholds Zero-Tolerance security, explains why replacements require authorization, and provides the exact Gift Returns self-service URL."
+          },
+          {
+            id: "opt-rep-unv-2b",
+            text: "Since you can't verify Brian's account, you are out of luck and we cannot help you with anything.",
+            quality: "bad",
+            impact: { mood: "furious", empathy: -40, compliance: -10, fcr: -30, timePenalty: 20 },
+            feedback: "Abrasive and unhelpful! You must always provide legitimate resolution alternatives like the Gift Returns portal."
+          }
+        ]
+      }
+    ]
   }
 ];
