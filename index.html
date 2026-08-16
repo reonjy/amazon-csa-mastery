@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Amazon Customer Service Associate (CSA) Training & Exam Mastery Simulator - Master SOPs, pass nesting, and ace QA compliance.">
+  <title>Amazon CSA Mastery — Training & Nesting Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Main Navigation Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-badge">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+          <span>CSA Mastery</span>
+        </div>
+        <div class="brand-title-wrap">
+          <h1 class="brand-title">Amazon CS Associate Simulator</h1>
+          <span class="brand-subtitle">Training, QA Compliance & Nesting Command Center</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Readiness Widget -->
+        <div class="readiness-widget" title="Your overall readiness score based on simulator and exam performance">
+          <span class="readiness-label">Nesting Readiness</span>
+          <div class="readiness-bar-wrap">
+            <div class="readiness-bar" id="global-readiness-bar" style="width: 0%;"></div>
+          </div>
+          <span class="readiness-val" id="global-readiness-val">0%</span>
+        </div>
+
+        <!-- Sound Toggle -->
+        <button id="btn-sound-toggle" class="icon-btn" aria-label="Toggle Sound Effects" title="Toggle Sound FX">
+          <svg id="sound-on-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="sound-off-icon" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Theme Toggle -->
+        <button id="btn-theme-toggle" class="icon-btn" aria-label="Toggle Dark / Light Theme" title="Toggle Theme">
+          <svg id="theme-moon-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="theme-sun-icon" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-tab="simulator" role="tab" id="tab-simulator">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <span>Mock Contact Simulator</span>
+      </button>
+      <button class="nav-tab" data-tab="sops" role="tab" id="tab-sops">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>SOP Knowledge Engine</span>
+      </button>
+      <button class="nav-tab" data-tab="exam" role="tab" id="tab-exam">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span>QA & Certification Exam</span>
+      </button>
+      <button class="nav-tab" data-tab="nesting" role="tab" id="tab-nesting">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span>OJT Macros & Acronyms</span>
+      </button>
+      <button class="nav-tab" data-tab="sme" role="tab" id="tab-sme">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg>
+        <span>SME Escalation Builder</span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- App Main Content Area -->
+  <main class="app-main">
+
+    <!-- ============================================== -->
+    <!-- TAB 1: MOCK CONTACT SIMULATOR                 -->
+    <!-- ============================================== -->
+    <section id="pane-simulator" class="tab-pane active">
+      <div class="pane-layout grid-simulator">
+        <!-- Scenario Selector Sidebar -->
+        <aside class="scenario-sidebar card">
+          <div class="card-header">
+            <h2 class="card-title">Training Scenarios</h2>
+            <span class="badge badge-accent">Live Practice</span>
+          </div>
+          <p class="section-desc">Choose a customer situation to practice real-time policy, empathy, and tool navigation.</p>
+          
+          <div class="scenario-list" id="scenario-list-container">
+            <!-- Populated dynamically via JS -->
+          </div>
+
+          <div class="metrics-card card-inner">
+            <h3 class="inner-title">Session Performance</h3>
+            <div class="metric-row">
+              <span>Customer Empathy</span>
+              <strong id="live-empathy-score">100%</strong>
+            </div>
+            <div class="metric-row">
+              <span>Process & QA Compliance</span>
+              <strong id="live-compliance-score">100%</strong>
+            </div>
+            <div class="metric-row">
+              <span>First Contact Resolution</span>
+              <strong id="live-fcr-score">100%</strong>
+            </div>
+            <div class="metric-row">
+              <span>Avg Handling Time</span>
+              <span id="live-timer" class="font-mono">00:00</span>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Active Simulation Workspace -->
+        <div class="simulation-workspace card">
+          <!-- Customer & Order CRM Header -->
+          <div class="sim-crm-header" id="sim-crm-header">
+            <div class="crm-customer-profile">
+              <div class="customer-avatar" id="sim-cust-avatar">SJ</div>
+              <div class="customer-info">
+                <div class="customer-name-row">
+                  <h3 id="sim-cust-name" class="customer-name">Sarah Jenkins</h3>
+                  <span id="sim-cust-type" class="badge badge-warning">Prime Member (10 Yrs)</span>
+                  <span id="sim-channel-badge" class="badge badge-outline">Live Chat</span>
+                </div>
+                <div class="crm-meta-details" id="sim-order-meta">
+                  <span>Order: <strong>114-8923011-4458921</strong></span>
+                  <span>Item: <strong>LEGO Millennium Falcon ($169.99)</strong></span>
+                  <span>Status: <strong class="status-warning">Delivered 3h ago</strong></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customer Mood Indicator -->
+            <div class="customer-mood-meter" title="Real-time Customer Sentiment Gauge">
+              <span class="mood-label">Customer Mood</span>
+              <div class="mood-status">
+                <span id="sim-mood-emoji" class="mood-emoji">😡</span>
+                <span id="sim-mood-text" class="mood-text">Angry</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scenario Background Banner -->
+          <div class="sim-briefing-banner" id="sim-briefing-banner">
+            <div class="briefing-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </div>
+            <p id="sim-briefing-text" class="briefing-text">Loading scenario context...</p>
+          </div>
+
+          <!-- Interactive Chat Thread -->
+          <div class="chat-thread-container" id="chat-thread-container">
+            <!-- Messages rendered dynamically -->
+          </div>
+
+          <!-- Associate Response Options Box -->
+          <div class="response-selection-box" id="response-selection-box">
+            <div class="response-box-header">
+              <span class="prompt-instruction">Select your response (Choose best empathy, compliance & resolution):</span>
+              <span id="turn-indicator" class="turn-badge">Step 1 of 3</span>
+            </div>
+            <div class="options-container" id="options-container">
+              <!-- Options rendered dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- TAB 2: SOP KNOWLEDGE ENGINE                   -->
+    <!-- ============================================== -->
+    <section id="pane-sops" class="tab-pane">
+      <div class="pane-layout grid-knowledge">
+        <div class="search-hero card">
+          <div class="search-bar-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="sop-search-input" class="search-input" placeholder="Search SOPs, keywords (DNR, Concession, A-to-z, Returns, Verification, Hazmat)..." autocomplete="off">
+            <button id="sop-clear-btn" class="clear-btn hidden" aria-label="Clear Search">&times;</button>
+          </div>
+
+          <!-- Category Filter Pills -->
+          <div class="filter-pills" id="sop-category-filters">
+            <button class="filter-pill active" data-cat="all">All SOPs (6)</button>
+            <button class="filter-pill" data-cat="Delivery & Logistics">Delivery & Logistics</button>
+            <button class="filter-pill" data-cat="Security & Account">Security & Verification</button>
+            <button class="filter-pill" data-cat="Returns & Replacements">Returns & Replacements</button>
+            <button class="filter-pill" data-cat="Concessions & Policies">Concessions & Credits</button>
+            <button class="filter-pill" data-cat="Digital & Subscriptions">Digital & Prime</button>
+            <button class="filter-pill" data-cat="Marketplace & 3P">Marketplace (A-to-z)</button>
+          </div>
+        </div>
+
+        <!-- SOP Cards Display Grid -->
+        <div class="sops-grid" id="sops-grid-container">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Interactive Decision Tree / Workflow Widget -->
+        <div class="decision-tree-card card">
+          <div class="card-header">
+            <h3 class="card-title">Interactive Decision Tree: Delivered Not Received (DNR)</h3>
+            <span class="badge badge-accent">Quick Visual SOP</span>
+          </div>
+          <div class="decision-tree-flow">
+            <div class="tree-node">
+              <span class="node-tag">Step 1</span>
+              <h4>Package Marked Delivered</h4>
+              <p>Check Photo on Delivery (POD) & Carrier GPS coordinates.</p>
+            </div>
+            <div class="tree-arrow">➔</div>
+            <div class="tree-node">
+              <span class="node-tag">Step 2: 48h Check</span>
+              <h4>&lt; 48 Hours Since Delivery?</h4>
+              <p>Advise checking safe spots/household. Allow carrier 48h scan window.</p>
+            </div>
+            <div class="tree-arrow">➔</div>
+            <div class="tree-node">
+              <span class="node-tag">Step 3: Eligibility</span>
+              <h4>&gt; 48 Hours + Item Missing</h4>
+              <p>Check account concession warning flag & item value threshold ($500+ incident report).</p>
+            </div>
+            <div class="tree-arrow">➔</div>
+            <div class="tree-node node-success">
+              <span class="node-tag">Resolution</span>
+              <h4>Issue Replacement or Refund</h4>
+              <p>Process customer preference (Gift Card or Original Method) + log carrier audit.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- TAB 3: QA & CERTIFICATION EXAM                -->
+    <!-- ============================================== -->
+    <section id="pane-exam" class="tab-pane">
+      <div class="pane-layout grid-exam">
+        <!-- Exam Sidebar / Stats -->
+        <aside class="exam-sidebar card">
+          <div class="card-header">
+            <h2 class="card-title">Certification Test</h2>
+            <span class="badge badge-warning">Passing: 85%+</span>
+          </div>
+          <p class="section-desc">Test your compliance, SOP knowledge, and soft skills before nesting. Includes Zero-Tolerance security questions.</p>
+
+          <div class="exam-stat-box card-inner">
+            <div class="stat-item">
+              <span class="stat-label">Total Questions</span>
+              <strong class="stat-val" id="exam-total-count">10</strong>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Answered</span>
+              <strong class="stat-val" id="exam-answered-count">0 / 10</strong>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Time Remaining</span>
+              <strong class="stat-val font-mono text-warning" id="exam-timer-display">10:00</strong>
+            </div>
+          </div>
+
+          <div class="exam-controls">
+            <button id="btn-start-exam" class="btn btn-primary btn-block">Restart / New Exam</button>
+            <button id="btn-submit-exam" class="btn btn-accent btn-block" disabled>Submit & Review Answers</button>
+          </div>
+        </aside>
+
+        <!-- Exam Active Question Sheet -->
+        <div class="exam-workspace card">
+          <div id="exam-questions-container" class="exam-questions-container">
+            <!-- Questions rendered via JS -->
+          </div>
+
+          <!-- Exam Result Card (Hidden until submitted) -->
+          <div id="exam-result-banner" class="exam-result-banner hidden">
+            <!-- Results populated via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- TAB 4: OJT MACROS & ACRONYMS                  -->
+    <!-- ============================================== -->
+    <section id="pane-nesting" class="tab-pane">
+      <div class="pane-layout grid-nesting">
+        <!-- One-Click Macro Library -->
+        <div class="macros-section card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">One-Click Macro Phrasing Library</h2>
+              <p class="section-desc">Click any template to copy directly to your clipboard for instant chat/email use.</p>
+            </div>
+            <span class="badge badge-accent">1-Click Copy</span>
+          </div>
+
+          <div class="macro-category-tabs" id="macro-category-tabs">
+            <!-- Dynamic Category Buttons -->
+          </div>
+
+          <div class="macro-cards-grid" id="macro-cards-container">
+            <!-- Dynamic Macro Cards -->
+          </div>
+        </div>
+
+        <!-- Acronym & Jargon Decoder -->
+        <aside class="acronyms-section card">
+          <div class="card-header">
+            <h2 class="card-title">Acronym & Jargon Decoder</h2>
+            <span class="badge badge-outline">Amazon Glossary</span>
+          </div>
+          <div class="search-bar-wrap mb-3">
+            <input type="text" id="acronym-search-input" class="search-input" placeholder="Filter acronyms (DNR, FCR, AHT, KNET)...">
+          </div>
+          <div class="acronyms-list" id="acronyms-list-container">
+            <!-- Populated via JS -->
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- TAB 5: SME ESCALATION BUILDER                 -->
+    <!-- ============================================== -->
+    <section id="pane-sme" class="tab-pane">
+      <div class="pane-layout grid-sme">
+        <div class="sme-form-card card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">SME / Lead Escalation Message Builder</h2>
+              <p class="section-desc">Format professional, structured escalation messages for Slack / Chime / Teams channels during live nesting.</p>
+            </div>
+            <span class="badge badge-warning">Floor Support</span>
+          </div>
+
+          <form id="sme-escalation-form" class="sme-form" onsubmit="return false;">
+            <div class="form-row grid-2">
+              <div class="form-group">
+                <label for="sme-order-id">Order ID / Customer Tracking ID</label>
+                <input type="text" id="sme-order-id" class="form-input" placeholder="e.g. 114-8923011-4458921" value="114-8923011-4458921">
+              </div>
+              <div class="form-group">
+                <label for="sme-channel-type">Contact Channel & Item Value</label>
+                <input type="text" id="sme-channel-type" class="form-input" placeholder="e.g. Live Chat / $169.99 FBA" value="Live Chat / $169.99 (FBA)">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="sme-issue-category">Issue Category</label>
+              <select id="sme-issue-category" class="form-input">
+                <option value="DNR - Delivered Not Received (>48 Hours)">DNR - Delivered Not Received (>48 Hours)</option>
+                <option value="High Concession Tier Request ($20+ Credit)">High Concession Tier Request ($20+ Credit)</option>
+                <option value="High-Value Item Damaged / Replacement ($500+)">High-Value Item Damaged / Replacement ($500+)</option>
+                <option value="Third-Party Seller Escalation (A-to-z Claim)">Third-Party Seller Escalation (A-to-z Claim)</option>
+                <option value="Account Security / 2FA Verification Issue">Account Security / 2FA Verification Issue</option>
+                <option value="Digital Media / Subscription Exception">Digital Media / Subscription Exception</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="sme-sop-checked">SOP & Policy Checked</label>
+              <input type="text" id="sme-sop-checked" class="form-input" placeholder="e.g. Checked DNR SOP + POD photo blurry + GPS match verified" value="DNR SOP 48h verified + GPS & POD inspected">
+            </div>
+
+            <div class="form-group">
+              <label for="sme-proposed-action">Your Proposed Action</label>
+              <input type="text" id="sme-proposed-action" class="form-input" placeholder="e.g. Issue one-time replacement order or Gift Card concession" value="Approve one-time replacement order via expedited shipping">
+            </div>
+
+            <div class="form-group">
+              <label for="sme-specific-question">Question for SME / Lead Approval Needed</label>
+              <textarea id="sme-specific-question" class="form-input textarea" rows="3" placeholder="Explain what specific approval or guidance you need from SME...">Customer account has a concession history warning flag from 6 months ago. Customer is a 10-year Prime member. Seeking SME authorization to override flag and issue replacement.</textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" id="btn-generate-sme" class="btn btn-primary">Generate Formatted Escalation</button>
+              <button type="button" id="btn-reset-sme" class="btn btn-secondary">Reset Fields</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Generated SME Output Box -->
+        <div class="sme-output-card card">
+          <div class="card-header">
+            <h3 class="card-title">Ready-to-Post Output</h3>
+            <button id="btn-copy-sme" class="btn btn-accent btn-sm">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span>Copy for Chime / Slack</span>
+            </button>
+          </div>
+          <div class="code-preview-wrap">
+            <pre id="sme-formatted-output" class="code-preview font-mono">Click "Generate Formatted Escalation" to see your formatted message...</pre>
+          </div>
+          
+          <div class="card-inner mt-3">
+            <h4 class="inner-title">Why Trainers & Leads Love This Format:</h4>
+            <ul class="best-practices-list">
+              <li><strong>Zero Back-and-Forth:</strong> The lead has all order details, category, and price in one glance.</li>
+              <li><strong>Shows Ownership:</strong> Proving you already checked the SOP demonstrates independence.</li>
+              <li><strong>Fast Approvals:</strong> Gives the lead a clear YES/NO decision rather than forcing them to research from scratch.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Scenario Completion Modal -->
+  <div id="modal-scenario-complete" class="modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-result-title" class="modal-title">Scenario Completed!</h3>
+        <button id="modal-close-btn" class="icon-btn" aria-label="Close Modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="score-circle-wrap">
+          <div class="score-circle" id="modal-score-circle">95%</div>
+          <p id="modal-score-sub" class="score-sub">Outstanding Customer Resolution</p>
+        </div>
+
+        <div class="breakdown-grid">
+          <div class="breakdown-item">
+            <span>Empathy & Tone</span>
+            <strong id="modal-empathy-val">100%</strong>
+          </div>
+          <div class="breakdown-item">
+            <span>QA Compliance</span>
+            <strong id="modal-compliance-val">100%</strong>
+          </div>
+          <div class="breakdown-item">
+            <span>FCR Resolution</span>
+            <strong id="modal-fcr-val">100%</strong>
+          </div>
+          <div class="breakdown-item">
+            <span>Handling Time</span>
+            <strong id="modal-time-val" class="font-mono">01:45</strong>
+          </div>
+        </div>
+
+        <div class="modal-feedback-box" id="modal-feedback-content">
+          <!-- Feedback notes -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="modal-next-scenario-btn" class="btn btn-primary">Try Another Scenario</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic Scripts -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

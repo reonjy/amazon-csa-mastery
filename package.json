@@ -1,0 +1,22 @@
+{
+  "name": "amazon-csa-mastery",
+  "version": "1.0.0",
+  "description": "Amazon Customer Service Associate (CSA) Training, QA Compliance & Nesting Mastery Simulator",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx -y serve . -p 3000",
+    "start": "npx -y serve . -p 3000",
+    "build": "echo 'Ready for production deployment'"
+  },
+  "keywords": [
+    "amazon-csa",
+    "customer-service",
+    "sop-simulator",
+    "nesting-trainer",
+    "qa-compliance",
+    "fcr",
+    "aht"
+  ],
+  "author": "Antigravity",
+  "license": "MIT"
+}
