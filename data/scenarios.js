@@ -1,4 +1,6 @@
-// Simulation Scenarios for Amazon CSA Practice
+// Comprehensive Interactive Simulation Scenarios for Amazon CSA Practice
+// Agent Name: Mark
+
 export const SCENARIO_DATA = [
   {
     id: "sc-dnr-prime",
@@ -22,10 +24,10 @@ export const SCENARIO_DATA = [
         options: [
           {
             id: "opt-1a",
-            text: "Thank you for confirming your name, Marcus. I am so sorry about the missing air purifier, especially after you waited the 48 hours. Let me pull up your account right now and check the delivery records to resolve this for you.",
+            text: "Hello Marcus! My name is Mark. I am so sorry about the missing air purifier, especially after you waited the 48 hours. Let me pull up your account right now and check the delivery records to resolve this for you.",
             quality: "best",
             impact: { mood: "annoyed", empathy: 25, compliance: 25, fcr: 20, timePenalty: 0 },
-            feedback: "Excellent! Empathetic acknowledgment, gratitude for waiting 48h, and immediate ownership."
+            feedback: "Excellent! Warm opening by Mark, empathetic acknowledgment, gratitude for waiting 48h, and immediate ownership."
           },
           {
             id: "opt-1b",
@@ -45,11 +47,11 @@ export const SCENARIO_DATA = [
       },
       {
         turnIndex: 2,
-        customerMessage: "Thank you. My allergies have been acting up and I really need it as soon as possible. What are my options?",
+        customerMessage: "Thank you, Mark. My allergies have been acting up and I really need it as soon as possible. What are my options?",
         options: [
           {
             id: "opt-2a",
-            text: "I reviewed the driver's GPS ping and it appears there was a delivery mismatch. Since it has been past 48 hours, I can issue an immediate free replacement with One-Day Priority Shipping so it arrives tomorrow by 1 PM, or issue a full refund to your card. Which do you prefer?",
+            text: "I reviewed the driver's GPS ping and it appears there was a delivery mismatch down the street. Since it has been past 48 hours, I can issue an immediate free replacement with One-Day Priority Shipping so it arrives tomorrow by 1 PM, or issue a full refund to your card. Which do you prefer?",
             quality: "best",
             impact: { mood: "pleasant", empathy: 25, compliance: 25, fcr: 30, timePenalty: 0 },
             feedback: "Superb! Validated GPS mismatch, adhered to DNR SOP, and gave flexible customer choices."
@@ -72,7 +74,7 @@ export const SCENARIO_DATA = [
             text: "I have placed replacement order #113-4491820 with Priority Next-Day Delivery at $0.00 charge, arriving tomorrow before 1 PM. I also filed an internal carrier investigation for the lost package. Have I resolved all of your questions today, Marcus?",
             quality: "best",
             impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 30, timePenalty: 0 },
-            feedback: "Outstanding wrap-up! Clear order details, zero charges confirmed, carrier report logged, and clean FCR check."
+            feedback: "Outstanding wrap-up by Mark! Clear order details, zero charges confirmed, carrier report logged, and clean FCR check."
           },
           {
             id: "opt-3b",
@@ -107,7 +109,7 @@ export const SCENARIO_DATA = [
         options: [
           {
             id: "opt-oil-1a",
-            text: "Oh no, Linda! I am so sorry to hear that. Please do NOT handle that broken glass directly so you don't risk injury. Under our Hazmat & Liquid SOP, you will NOT have to return anything. Let me take care of your refund right now.",
+            text: "Hello Linda, my name is Mark. I am so sorry to hear that! Please do NOT handle that broken glass directly so you don't risk injury. Under our Hazmat & Liquid SOP, you will NOT have to return anything. Let me take care of your full refund right now.",
             quality: "best",
             impact: { mood: "annoyed", empathy: 30, compliance: 30, fcr: 25, timePenalty: 0 },
             feedback: "Flawless safety-first empathy! Immediate relief that returning broken glass is not required."
@@ -123,7 +125,7 @@ export const SCENARIO_DATA = [
       },
       {
         turnIndex: 2,
-        customerMessage: "Thank goodness! I was terrified of cutting my hands. How soon will the refund show up?",
+        customerMessage: "Thank goodness! I was terrified of cutting my hands. How soon will the refund show up, Mark?",
         options: [
           {
             id: "opt-oil-2a",
@@ -145,7 +147,7 @@ export const SCENARIO_DATA = [
   },
   {
     id: "sc-wrong-formula",
-    title: "Wrong Item Received - Urgent Baby Formula Mix-up",
+    title: "Wrong Item Received - Urgent Infant Formula Mix-up",
     customerName: "Daniel Roberts",
     customerType: "Prime Member (4 Years)",
     channel: "Inbound Phone Call",
@@ -165,10 +167,10 @@ export const SCENARIO_DATA = [
         options: [
           {
             id: "opt-form-1a",
-            text: "Daniel, I completely understand the urgency of this situation, and I am so deeply sorry for this warehouse mix-up. Let me immediately check local same-day inventory to get your baby formula dispatched this evening.",
+            text: "Hello Daniel, my name is Mark. I completely understand the extreme urgency of this situation, and I am so deeply sorry for this warehouse mix-up. Let me immediately check local same-day inventory to get your baby formula dispatched this evening.",
             quality: "best",
             impact: { mood: "annoyed", empathy: 30, compliance: 25, fcr: 25, timePenalty: 0 },
-            feedback: "Outstanding empathy acknowledging baby formula urgency and taking immediate priority action."
+            feedback: "Outstanding empathy by Mark acknowledging baby formula urgency and taking immediate priority action."
           },
           {
             id: "opt-form-1b",
@@ -181,7 +183,7 @@ export const SCENARIO_DATA = [
       },
       {
         turnIndex: 2,
-        customerMessage: "Please check, that would be a lifesaver. And what do I do with these gloves?",
+        customerMessage: "Please check, Mark, that would be a lifesaver. And what do I do with these gloves?",
         options: [
           {
             id: "opt-form-2a",
@@ -223,10 +225,10 @@ export const SCENARIO_DATA = [
         options: [
           {
             id: "opt-sec-1a",
-            text: "I can certainly assist you with reviewing your order, David. For your account security and protection, I just need to verify your full billing address and the last 4 digits of the payment method on file first.",
+            text: "Hello, my name is Mark. I can certainly assist you with reviewing your order, David. For your account security and protection, I just need to verify your full billing address and the last 4 digits of the payment method on file first.",
             quality: "best",
             impact: { mood: "neutral", empathy: 20, compliance: 30, fcr: 20, timePenalty: 0 },
-            feedback: "Perfect compliance! Standard security verification initiated before making any changes or disclosing account details."
+            feedback: "Perfect compliance! Mark initiates standard security verification before making changes or disclosing account details."
           },
           {
             id: "opt-sec-1b",
@@ -239,7 +241,7 @@ export const SCENARIO_DATA = [
       },
       {
         turnIndex: 2,
-        customerMessage: "Look, I'm in a rush at the airport and don't have my card on me! Can't you just see I gave you the order number? Just reroute it to 900 Industrial Blvd, Miami, FL!",
+        customerMessage: "Look Mark, I'm in a rush at the airport and don't have my card on me! Can't you just see I gave you the order number? Just reroute it to 900 Industrial Blvd, Miami, FL!",
         options: [
           {
             id: "opt-sec-2a",
@@ -259,7 +261,7 @@ export const SCENARIO_DATA = [
       },
       {
         turnIndex: 3,
-        customerMessage: "Ugh, fine. The code is 849201. Now will you update it?",
+        customerMessage: "Ugh, fine. The code is 849201. Now will you update it, Mark?",
         options: [
           {
             id: "opt-sec-3a",
@@ -301,10 +303,10 @@ export const SCENARIO_DATA = [
         options: [
           {
             id: "opt-prime-1a",
-            text: "Hello George, thank you for confirming your info. I understand that seeing an unexpected charge is alarming! Let me check your account billing history right away to identify this charge for you.",
+            text: "Hello George, my name is Mark. I understand that seeing an unexpected charge is alarming! Let me check your account billing history right away to identify this charge for you.",
             quality: "best",
             impact: { mood: "annoyed", empathy: 25, compliance: 25, fcr: 20, timePenalty: 0 },
-            feedback: "Great calm, reassuring tone that diffuses fraud anxiety."
+            feedback: "Great calm, reassuring tone by Mark that diffuses fraud anxiety."
           },
           {
             id: "opt-prime-1b",
@@ -317,7 +319,7 @@ export const SCENARIO_DATA = [
       },
       {
         turnIndex: 2,
-        customerMessage: "Please check, because I don't remember authorizing $139.",
+        customerMessage: "Please check Mark, because I don't remember authorizing $139.",
         options: [
           {
             id: "opt-prime-2a",
@@ -359,7 +361,7 @@ export const SCENARIO_DATA = [
         options: [
           {
             id: "opt-3p-1a",
-            text: "Maria, I am so sorry you had to deal with that! Third-party sellers on Amazon are required to match Amazon's return policies, and you should NEVER have to pay return fees for defective items. Let me review your message history with this seller right now.",
+            text: "Hello Maria, my name is Mark. I am so sorry you had to deal with that! Third-party sellers on Amazon are required to match Amazon's return policies, and you should NEVER have to pay return fees for defective items. Let me review your message history with this seller right now.",
             quality: "best",
             impact: { mood: "annoyed", empathy: 25, compliance: 25, fcr: 25, timePenalty: 0 },
             feedback: "Reassures customer on marketplace standards and checks buyer-seller messaging."
@@ -375,7 +377,7 @@ export const SCENARIO_DATA = [
       },
       {
         turnIndex: 2,
-        customerMessage: "Please check the messages, he was very rude.",
+        customerMessage: "Please check the messages Mark, he was very rude.",
         options: [
           {
             id: "opt-3p-2a",
@@ -390,6 +392,120 @@ export const SCENARIO_DATA = [
             quality: "bad",
             impact: { mood: "annoyed", empathy: -15, compliance: -10, fcr: 10, timePenalty: 0 },
             feedback: "Vague timeline and dismissive tone."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "sc-price-drop",
+    title: "Post-Purchase Price Drop & Courtesy Credit Request",
+    customerName: "Rachel Adams",
+    customerType: "Prime Member (5 Years)",
+    channel: "Inbound Phone Call",
+    initialMood: "annoyed",
+    orderInfo: {
+      orderId: "112-9901823-1120938",
+      item: "Ninja Foodi 8-in-1 Air Fryer ($179.99 bought 4 days ago; now $149.99)",
+      status: "Delivered 2 days ago",
+      deliveryTime: "Aug 14"
+    },
+    background: "Customer bought an air fryer 4 days ago for $180, and today it went on Deal of the Day for $150. She is calling asking for a price match refund instead of returning the heavy box.",
+    turns: [
+      {
+        turnIndex: 1,
+        customerMessage: "Hi Mark! I bought a Ninja Air Fryer 4 days ago for $180, and today it is on sale for $150 on your app! It hasn't even been opened. Can you refund the $30 difference, or do I have to return this one and order a new one?",
+        options: [
+          {
+            id: "opt-price-1a",
+            text: "Hello Rachel! Thank you for contacting Amazon. My name is Mark. I completely understand wanting the best deal, especially when a great discount appears right after you purchase! Let me review your order details right now.",
+            quality: "best",
+            impact: { mood: "neutral", empathy: 25, compliance: 25, fcr: 20, timePenalty: 0 },
+            feedback: "Empathetic acknowledgment of price frustration with proactive review."
+          },
+          {
+            id: "opt-price-1b",
+            text: "No price matching ever. You have to return it and re-buy it.",
+            quality: "bad",
+            impact: { mood: "angry", empathy: -30, compliance: -10, fcr: -20, timePenalty: 15 },
+            feedback: "Rigid and dismissive. Creates unnecessary shipping costs for Amazon."
+          }
+        ]
+      },
+      {
+        turnIndex: 2,
+        customerMessage: "It would just be so wasteful to ship a 20-pound box back and forth.",
+        options: [
+          {
+            id: "opt-price-2a",
+            text: "You make a very practical point, Rachel. While Amazon doesn't offer automated post-delivery price matching due to dynamic supplier pricing, I value your 5 years with Prime. As a one-time courtesy, I have applied a $20.00 Amazon Courtesy Promotional Credit to your account balance for your next order. It is active right now!",
+            quality: "best",
+            impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 35, timePenalty: 0 },
+            feedback: "Outstanding application of associate goodwill credit tier ($20) to prevent costly return logistics."
+          },
+          {
+            id: "opt-price-2b",
+            text: "I will give you $100 credit for your trouble.",
+            quality: "risky",
+            impact: { mood: "delighted", empathy: 10, compliance: -50, fcr: 0, timePenalty: 0 },
+            feedback: "Concession violation! $100 credit far exceeds standard associate authorization."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "sc-locker-pickup",
+    title: "Amazon Hub Locker Expired Reservation & Home Delivery",
+    customerName: "Brandon Cole",
+    customerType: "Prime Member (3 Years)",
+    channel: "Inbound Phone Call",
+    initialMood: "annoyed",
+    orderInfo: {
+      orderId: "111-3391820-4491823",
+      item: "Anker USB-C Power Bank ($89.99)",
+      status: "Returned to Fulfillment Center (Locker 3-day hold expired)",
+      pickupLocation: "Hub Locker - 7-Eleven Pine St"
+    },
+    background: "Customer was traveling and missed the 3-day pickup window at the Amazon Hub Locker. The item was returned. Customer calls confused and needs the power bank tomorrow.",
+    turns: [
+      {
+        turnIndex: 1,
+        customerMessage: "Hey Mark, I went to the Amazon Locker to pick up my power bank and the screen said my reservation expired and package was returned! Why was it sent back? I need this for my flight tomorrow!",
+        options: [
+          {
+            id: "opt-lock-1a",
+            text: "Hello Brandon! My name is Mark. I understand how frustrating it is to arrive at the locker only to find your package has been returned! Let me check the locker delivery timestamps right now to explain what happened and get you taken care of.",
+            quality: "best",
+            impact: { mood: "neutral", empathy: 25, compliance: 25, fcr: 20, timePenalty: 0 },
+            feedback: "Great calm opening by Mark, taking ownership to investigate."
+          },
+          {
+            id: "opt-lock-1b",
+            text: "You didn't read the email. You only have 3 days to pick it up.",
+            quality: "bad",
+            impact: { mood: "angry", empathy: -40, compliance: -10, fcr: -20, timePenalty: 20 },
+            feedback: "Condescending tone."
+          }
+        ]
+      },
+      {
+        turnIndex: 2,
+        customerMessage: "I was away on a business trip over the weekend. What can we do so I have it before tomorrow afternoon?",
+        options: [
+          {
+            id: "opt-lock-2a",
+            text: "Amazon Hub Lockers hold packages for 3 calendar days before auto-returning to keep slots open. The $89.99 was already refunded to your account. I can re-order the exact same Anker Power Bank right now with free One-Day Shipping to your home address, arriving tomorrow before 2 PM. Would you like me to place that?",
+            quality: "best",
+            impact: { mood: "delighted", empathy: 25, compliance: 25, fcr: 35, timePenalty: 0 },
+            feedback: "Superb First Contact Resolution! Clear policy explanation, validated refund, and placed replacement to home address."
+          },
+          {
+            id: "opt-lock-2b",
+            text: "Order it again yourself on the app.",
+            quality: "bad",
+            impact: { mood: "annoyed", empathy: -30, compliance: -10, fcr: -20, timePenalty: 10 },
+            feedback: "Lazy customer service."
           }
         ]
       }

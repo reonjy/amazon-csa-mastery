@@ -434,7 +434,7 @@ function handleOptionSelected(optionId, currentTurn) {
   const selectedOpt = currentTurn.options.find(o => o.id === optionId);
   if (!selectedOpt) return;
 
-  addChatMessage('associate', 'You (Associate)', selectedOpt.text, selectedOpt.feedback, selectedOpt.quality);
+  addChatMessage('associate', 'Mark (Associate)', selectedOpt.text, selectedOpt.feedback, selectedOpt.quality);
 
   const imp = selectedOpt.impact;
   AppState.simScores.empathy = Math.max(0, Math.min(100, AppState.simScores.empathy + imp.empathy));

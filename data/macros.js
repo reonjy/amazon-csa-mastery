@@ -7,7 +7,7 @@ export const MACRO_CATEGORIES = [
       {
         id: "m-open-1",
         title: "Standard Prime Greeting",
-        text: "Hello [Customer Name]! Thank you for contacting Amazon Customer Support. My name is [Your Name]. I hope you're having a good day so far. How may I assist you today?"
+        text: "Hello [Customer Name]! Thank you for contacting Amazon Customer Support. My name is Mark. I hope you're having a good day so far. How may I assist you today?"
       },
       {
         id: "m-open-2",
